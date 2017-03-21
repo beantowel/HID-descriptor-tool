@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>fileTypes</key>
+	<array>
+		<string>rptDsc</string>
+	</array>
+	<key>name</key>
+	<string>rptDsc</string>
+	<key>patterns</key>
+	<array>
+		<dict>
+			<key>comment</key>
+			<string>comment</string>
+			<key>match</key>
+			<string>//.*$</string>
+			<key>name</key>
+			<string>comment.line.double-slash</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>MainItem</string>
+			<key>match</key>
+			<string>(?i)^\s*(Input|Output|Feature|Collection|End_Collection)</string>
+			<key>name</key>
+			<string>keyword.rptDsc.MainItem</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>GlobalItem</string>
+			<key>match</key>
+			<string>(?i)^\s*(Usage_Page|((Logical_|Physical_)\w*)|Unit_Exponent|(Report_\w*)|Unit)</string>
+			<key>name</key>
+			<string>constant.other.rptDsc.GlobalItem</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>LocalItem</string>
+			<key>match</key>
+			<string>(?i)^\s*(Usage_Minimum|Usage_Maximum|Usage)</string>
+			<key>name</key>
+			<string>string.rptDsc.LocalItem</string>
+		</dict>
+	</array>
+	<key>scopeName</key>
+	<string>source.rptDsc</string>
+	<key>uuid</key>
+	<string>e026bc87-4590-4d46-83c4-4668c0fb283c</string>
+</dict>
+</plist>

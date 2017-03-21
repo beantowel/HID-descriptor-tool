@@ -1,0 +1,24 @@
+ # [PackageDev] target_format: plist, ext: tmLanguage
+---
+name: rptDsc
+scopeName: source.rptDsc
+fileTypes: [rptDsc]
+uuid: e026bc87-4590-4d46-83c4-4668c0fb283c
+
+patterns:
+- comment: comment
+  name: comment.line.double-slash
+  match: //.*$
+
+- comment: MainItem
+  name: keyword.rptDsc.MainItem
+  match: (?i)^\s*(Input|Output|Feature|Collection|End_Collection)
+
+- comment: GlobalItem
+  name: constant.other.rptDsc.GlobalItem
+  match: (?i)^\s*(Usage_Page|((Logical_|Physical_)\w*)|Unit_Exponent|(Report_\w*)|Unit)
+
+- comment: LocalItem
+  name: string.rptDsc.LocalItem
+  match: (?i)^\s*(Usage_Minimum|Usage_Maximum|Usage)
+...

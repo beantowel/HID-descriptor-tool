@@ -46,11 +46,12 @@ def ShortItem(prefix,x,isSign):
 		byteSize=Byte_Size(x)
 	else:
 		byteSize=u_Byte_Size(x)
+
 	if byteSize==4:
-		prefix=prefix+3 #0b11 represents 4
+		pre=prefix+3 #0b11 represents 4
 	else:
-		prefix=prefix+byteSize
-	pre=hex(prefix)
+		pre=prefix+byteSize
+	pre=hex(pre)
 	pre=prefixZero(pre,1)
 
 	size=byteSize*8

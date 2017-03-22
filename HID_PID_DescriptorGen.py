@@ -9,7 +9,7 @@ def Byte_Size(x):
 	if x>=-0x7FFF-1 and x<=0x7FFF:
 		return 2
 	if x>=-0x7FFFFFFF-1 and x<=0x7FFFFFFF:
-		return 3 #0b11 represents 4
+		return 4 #0b11 represents 4
 def u_Byte_Size(x):
 	'''ByteSize for Short Items
 	return 0,1,2,or4'''
@@ -19,7 +19,7 @@ def u_Byte_Size(x):
 	if x<=0xFFFF:
 		return 2
 	if x<=0xFFFFFFFF:
-		return 3 #0b11 represents 4
+		return 4 #0b11 represents 4
 def toComplementBytes(x,size):
 	x=int(x)
 	if x<0:
@@ -46,7 +46,11 @@ def ShortItem(prefix,x,isSign):
 		byteSize=Byte_Size(x)
 	else:
 		byteSize=u_Byte_Size(x)
-	pre=hex(prefix+byteSize)
+	if byteSize==4:
+		prefix=prefix+3 #0b11 represents 4
+	else:
+		prefix=prefix+byteSize
+	pre=hex(prefix)
 	pre=prefixZero(pre,1)
 
 	size=byteSize*8

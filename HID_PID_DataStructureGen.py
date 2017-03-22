@@ -90,7 +90,7 @@ def StatMachine(mainItem,value):
             Outputs.append('//Unit_Exponent:'+glStat['Unit_Exponent'])
 
 fileIn     = "HID_Descriptor_Input.rptDsc"
-fileOut    = open("HID_DataStructure.out",'w')
+fileOut    = open("HID_DataStructure.h",'w')
 lines      = open(fileIn).readlines()
 glStat     = {
     'Unit':'Unit_None',

@@ -9,7 +9,7 @@ def Byte_Size(x):
 	if x>=-0x7FFF-1 and x<=0x7FFF:
 		return 2
 	if x>=-0x7FFFFFFF-1 and x<=0x7FFFFFFF:
-		return 4
+		return 3 #0b11 represents 4
 def u_Byte_Size(x):
 	'''ByteSize for Short Items
 	return 0,1,2,or4'''
@@ -19,7 +19,7 @@ def u_Byte_Size(x):
 	if x<=0xFFFF:
 		return 2
 	if x<=0xFFFFFFFF:
-		return 4
+		return 3 #0b11 represents 4
 def toComplementBytes(x,size):
 	x=int(x)
 	if x<0:
@@ -96,8 +96,8 @@ for line in lines:
 	if not(b):
 		continue
 	#print(out)
-	fileOut.write(out[0]+',')
-	for i in out[1]:
+	fileOut.write(out[0]+',') # prefix
+	for i in out[1]: # data
 		fileOut.write(i+',')
 	for i in range(0,4-len(out[1])): #max 4 byte
 		fileOut.write('     ')

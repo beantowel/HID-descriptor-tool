@@ -37,7 +37,7 @@ Collection(Clc_Application),
 	Usage_Page(Physical_Interface), //FFBMK1 JoyStick Outpus
 	Usage(PID_Create_New_Effect_Report),
 	Collection(Clc_Logical),
-		//Report_ID(1),
+		Report_ID(1),
 		Usage(PID_Effect_Type),
 		Collection(Clc_Logical),
 			Usage(PID_ET_Constant_Force),

@@ -28,6 +28,7 @@ enum PID_PID_Device_Control_Enum : uint8_t {
 };
 
 enum Report_ID_Enum : uint8_t {
+    ID_PID_Create_New_Effect_Report = 1,
     ID_PID_PID_Block_Load_Report = 2,
     ID_PID_Set_Effect_Report = 3,
     ID_PID_Set_Envelope_Report = 4,
@@ -50,6 +51,7 @@ const uint8_t Mask_PID_Safety_Switch = 0x4;
 const uint8_t Mask_PID_Actuator_Power = 0x8;
 
 typedef struct _PID_Create_New_Effect_Report {
+    //Report_ID:1
     struct {
         enum PID_Effect_Type_Enum pid_effect_type_enum_0;
         //Logical_Maximum:5

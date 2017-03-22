@@ -34,6 +34,7 @@
 0x05,0x0f,                //    Usage_Page(Physical_Interface), //FFBMK1 JoyStick Outpus
 0x09,0xab,                //    Usage(PID_Create_New_Effect_Report),
 0xa1,0x02,                //    Collection(Clc_Logical),
+0x85,0x01,                //        Report_ID(1),
 0x09,0x25,                //        Usage(PID_Effect_Type),
 0xa1,0x02,                //        Collection(Clc_Logical),
 0x09,0x26,                //            Usage(PID_ET_Constant_Force),
@@ -350,4 +351,4 @@
 0x91,0x02,                //        Output(IOF_Variable),
 0xc0,                     //    End_Collection(),
 0xc0,                     //End_Collection(),
-//Total:713 Bytes
+//Total:715 Bytes

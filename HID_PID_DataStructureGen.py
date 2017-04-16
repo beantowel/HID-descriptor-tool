@@ -3,7 +3,7 @@ import copy
 from HID_PID_Definitions import *
 
 def StatMachine(mainItem,value):
-    global Outputs,structName,enumName
+    global Outputs, structName, enumDef, structVars
 
     if mainItem=='Collection':
         try:
@@ -11,6 +11,7 @@ def StatMachine(mainItem,value):
         except:
             print('error',lcalStat)
         structName.append(sN)
+        structVars.append(0)
         if len(structName)==1:
             Outputs.append('typedef struct _'+sN+'{') #struct begins
         else:
@@ -18,6 +19,7 @@ def StatMachine(mainItem,value):
         return
     if mainItem=='End_Collection':
         sN=structName.pop()
+        structVars.pop()
         Outputs.append('} '+sN+';') #struct ends
         return
 
@@ -37,7 +39,7 @@ def StatMachine(mainItem,value):
 
             enumT=structName[-1]+'_Enum'
             enumtype='uint'+str(rSize)+'_t' #ARM style typedef
-            enumName.append(['enum '+enumT+' : '+enumtype,copy.copy(enumV)])
+            enumDef.append(['enum '+enumT,copy.copy(enumV)])
             for i in range(0,rCnt):
                 Outputs.append('enum '+enumT+' '+enumT.lower()+'_'+str(i)+';')
         if value=='IOF_Variable':
@@ -59,8 +61,8 @@ def StatMachine(mainItem,value):
                 bitCnt = rSize * rCnt
                 byteCnt = int((bitCnt+7)/8) #round byteCnt
                 cnt = 0
-                for i in range(0,byteCnt):
-                    Outputs.append('uint8_t vars_'+str(i)+';')
+                for i in range(0, byteCnt):
+                    Outputs.append('uint8_t vars_'+str(i + structVars[-1])+';')
                     comment='//'
                     # reportSize|8
                     for j in range(0, int(8/rSize)):
@@ -73,10 +75,11 @@ def StatMachine(mainItem,value):
                         mask = mask << (j * rSize)
                         bitMask.append([u,mask])
                     Outputs.append(comment)
+                structVars[-1]+=byteCnt
                 Outputs.append('//Check Pads')
         if value=='IOF_Constant':
             pads = rCnt * rSize
-            Outputs.append('//'+str(pads)+'pads added')
+            Outputs.append('//'+str(pads)+'-pads added')
         # if value=='IOF_IOF_Defalut_Items':
         #     gg
 
@@ -101,13 +104,18 @@ mainStat   = {} #main Status
 status     = [glStat,lcalStat,mainStat]
 Outputs    = []
 structName = []
-enumName   = []
+structVars = []
+enumDef   = []
 rptID      = []
 bitMask    = []
 
 strStart=False
 strEnd=False
 for line in lines:
+    # //Start Copy Data Structure Input
+    # //The above comment was a starting flag for DataStructureGen.py, don't move
+    # //End Copy Data Structure Input
+    # //The above comment was an ending flag for DataStructureGen.py, don't move
     if line.find('Start Copy Data Structure Input')>=0:
         strStart=True
     if line.find('End Copy Data Structure Input')>=0:
@@ -150,8 +158,27 @@ for line in lines:
             StatMachine(m,value[0][1:-1])
             break
 
+prefixText = '''#ifndef __USB_PID_Def
+#define __USB_PID_Def
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include "stdint.h"
+
+'''
+sucfixText = '''
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* __USB_PID_Def */
+'''
+fileOut.write(prefixText)
+
 enumVis=[] #delete repeat definition
-for enum in enumName: #enumerations
+for enum in enumDef: #enumerations
     if enum[0] in enumVis:
         continue
     enumVis.append(enum[0])
@@ -160,7 +187,7 @@ for enum in enumName: #enumerations
         fileOut.write(usage+'\n')
     fileOut.write('};\n\n')
 
-fileOut.write('enum Report_ID_Enum:uint8_t{\n') #reportID enums
+fileOut.write('enum Report_ID_Enum {\n')
 for rpt in rptID:
     fileOut.write(rpt[0]+'='+rpt[1]+',\n')
 fileOut.write('};\n\n')
@@ -177,5 +204,5 @@ for line in Outputs: #structs
     if line.find('}')>=0:
         cnt-=1
     fileOut.write(line+'\n')
-
+fileOut.write(sucfixText)
 fileOut.close()

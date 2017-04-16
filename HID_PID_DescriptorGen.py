@@ -42,6 +42,10 @@ def SplitToLittleEndien(hdata,byteSize):
 def ShortItem(prefix,x,isSign):
 	'''construct short item by prefix'''
 	global bytecount
+
+	if prefix==0xc0: #End_Collection exception
+		bytecount+=1
+		return "0xc0",[]
 	if isSign:
 		byteSize=Byte_Size(x)
 	else:
@@ -57,13 +61,13 @@ def ShortItem(prefix,x,isSign):
 	size=byteSize*8
 	if prefix==0x54: #Unit_Exponent exception
 		size=4 #one nibble
+
 	hdata=toComplementBytes(x,size)
 	data=SplitToLittleEndien(hdata,byteSize)
-	if prefix==0xc0: #End_Collection exception
-		bytecount+=1
-		return "0xc0",[]
+
 	bytecount=bytecount+1+len(data)
 	return pre,data
+
 fileIn="HID_Descriptor_Input.rptDsc"
 fileOut=open("HID_Descriptor.out",'w')
 lines=open(fileIn).readlines()
@@ -89,11 +93,11 @@ for line in lines:
 						const=re.findall('\('+regex1+'\)',value[0])
 						for j in const:
 							x=consts[regex1]
-							out=ShortItem(prefix,x,False)
+							out=ShortItem(prefix,x,False) #preDefinedConstant
 							b=True
 				if not(b) and len(value[0])>2:
 					x=int(value[0][1:-1])
-					out=ShortItem(prefix,x,True)
+					out=ShortItem(prefix,x,True) #value
 					b=True
 				if not(b):
 					out=ShortItem(prefix,0,True) #defalut x=0

@@ -27,6 +27,7 @@ IOF_Constants={
     "IOF_Constant"      : 0x3,
     "IOF_Variable"      : 0x2,
     "IOF_Array"         : 0x1,
+    "IOF_VariableBuffer": 0x0102,
 }
 Clc_Constants={
     "Clc_Physical"     : 0x00,
@@ -36,20 +37,19 @@ Clc_Constants={
     "Clc_Named_Array"  : 0x04,
     "Clc_Usage_Switch" : 0x05,
 }
-Unit_Exponent_Constants={
-    "Unit_None" : 0x00
-}
 Unit_Constants={
     "Eng_Lin_Time": 0x1003,
     "Eng_Rot_Angular_Pos": 0x14,
+    "Unit_None" : 0x00,
 }
 Usage_Page_Constants={
-"Generic_Desktop_ID" : 0x01,
-"Simulation_ID"      : 0x02,
-"Button_ID"          : 0x09,
-"Physical_Interface" : 0x0F,
+    "Generic_Desktop_ID" : 0x01,
+    "Simulation_ID"      : 0x02,
+    "Button_ID"          : 0x09,
+    "Physical_Interface" : 0x0F,
+    "Ordinal_ID"         : 0x0A,
 }
-Usage_Constants={
+GenericDesktop_Constants={
 #Generic Desktop Page
     "Pointer_ID"   : 0x01,
     "Joystick_ID"  : 0x04,
@@ -61,12 +61,20 @@ Usage_Constants={
     "Ry_ID"        : 0x34,
     "Rz_ID"        : 0x35,
     "Byte_Count"   : 0x3B,
+}
+SimulationControl_Constants={
 #Simulation Control Page
     "Throttle_ID"  : 0xBB,
+}
+Button_Constants={
 #Button Usage Page
     "No_botton_ID" : 0x00,
     "Button1_ID"   : 0x01,
     "Button4_ID"   : 0x04,
+}
+Ordinal_Constans={
+    "Instance_1" : 0x01,
+    "Instance_2" : 0x02,
 }
 #PID usages from \
 #Device Class Definition for Physical Interface Devices (PID) Version 1.0
@@ -181,11 +189,40 @@ PID_Usage_Constants={
 }
 HID_Items=[Main_Items,Global_Items,Local_Items]
 HID_Constants=[
-    Usage_Constants,
+    GenericDesktop_Constants,
+    SimulationControl_Constants,
+    Button_Constants,
     Usage_Page_Constants,
     Unit_Constants,
-    Unit_Exponent_Constants,
     Clc_Constants,
     IOF_Constants,
     PID_Usage_Constants,
+    Ordinal_Constans,
 ]
+UsageByPage={
+    "Generic_Desktop_ID" : GenericDesktop_Constants,
+    "Simulation_ID"      : SimulationControl_Constants,
+    "Button_ID"          : Button_Constants,
+    "Physical_Interface" : PID_Usage_Constants,
+    "Ordinal_ID"         : Ordinal_Constans,
+}
+ConstByItem={
+    "Input"          : IOF_Constants,
+    "Output"         : IOF_Constants,
+    "Feature"        : IOF_Constants,
+    "Collection"     : Clc_Constants,
+    "End_Collection" : [],
+    "Usage_Page"       : Usage_Page_Constants,
+    "Logical_Minimum"  : [],
+    "Logical_Maximum"  : [],
+    "Physical_Minimum" : [],
+    "Physical_Maximum" : [],
+    "Unit_Exponent"    : [],
+    "Unit"             : Unit_Constants,
+    "Report_Size"      : [],
+    "Report_ID"        : [],
+    "Report_Count"     : [],
+    "Usage"         : [],
+    "Usage_Minimum" : [],
+    "Usage_Maximum" : [],
+}

@@ -47,14 +47,15 @@ def ShortItem(prefix,data,byteSize,changePage):
 	else:
 		pre=prefix+byteSize
 	hdata=hex(data)
-	pre=hex(pre)
-	pre=PrefixZero(pre,1)
 	data=SplitToLittleEndien(hdata,byteSize)
 	if changePage!=None:
+		pre=prefix+3
 		exData=hex(changePage[1])
 		exData=PrefixZero(exData,2)
 		exData=SplitToLittleEndien(exData,2)
 		data.extend(exData)
+	pre=hex(pre)
+	pre=PrefixZero(pre,1)
 	bytecount+=1 + len(data)
 	return pre,data
 def MatchDefine(defSets,findFunc):
@@ -92,17 +93,20 @@ for line in lines:
 	changePage=MatchDefine([Usage_Page_Constants],tfunc)
 
 	defSet=HID_Constants
-	if item[0]=='Usage':
-		defSet=[UsageByPage[usagePage]] #switch to usagePage
+	if item[0]=='Usage': #switch to usagePage
+		defSet=[UsageByPage[usagePage]]
 		if changePage!=None:
 			defSet=[UsageByPage[changePage[0]]]
-	else:
+	else: #switch to corresponded item
 		defSet=[ConstByItem[item[0]]]
 
 	tfunc=lambda regex:re.search('\('+regex+'[\):]',inBracket)
 	value=MatchDefine(defSet, tfunc)
 	if value!=None:
-		out=ShortItem(item[1],value[1],u_Byte_Size(value[1]),changePage)
+		byteSize=u_Byte_Size(value[1])
+		if changePage!=None:
+			byteSize=2
+		out=ShortItem(item[1],value[1],byteSize,changePage)
 		#unsigned preDefinedConstant
 	else:
 		if len(inBracket[1:-1])>0:
@@ -115,7 +119,7 @@ for line in lines:
 		else:
 			out=ShortItem(item[1],0,0,changePage) #defalut none value
 
-	if item[0]=='Usage_Page':
+	if item[0]=='Usage_Page': #update Usage_Page
 		usagePage=value[0]
 
 	fileOut.write(out[0]+',') # prefix

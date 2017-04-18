@@ -7,6 +7,39 @@ extern "C" {
 
 #include "stdint.h"
 
+#define ID_PID_PID_State_Report 2
+#define ID_PID_Set_Effect_Report 1
+#define ID_PID_Set_Envelope_Report 2
+#define ID_PID_Set_Condition_Report 3
+#define ID_PID_Set_Periodic_Report 4
+#define ID_PID_Set_Constant_Force_Report 5
+#define ID_PID_Set_Ramp_Force_Report 6
+#define ID_PID_Custom_Force_Data_Report 7
+#define ID_PID_Download_Force_Sample 8
+#define ID_PID_Effect_Operation_Report 10
+#define ID_PID_PID_Block_Free_Report 11
+#define ID_PID_PID_Device_Control 12
+#define ID_PID_Device_Gain_Report 13
+#define ID_PID_Set_Custom_Force_Report 14
+#define ID_PID_Create_New_Effect_Report 5
+#define ID_PID_PID_Block_Load_Report 6
+#define ID_PID_PID_Pool_Report 7
+
+#define Mask_PID_Device_Paused 0x1
+#define Mask_PID_Actuators_Enabled 0x2
+#define Mask_PID_Safety_Switch 0x4
+#define Mask_PID_Actuator_Override_Switch 0x8
+#define Mask_PID_Actuator_Power 0x10
+#define Mask_PID_Effect_Playing 0x1
+#define Mask_PID_Effect_Block_Index 0x7f
+#define Mask_X_ID 0x1
+#define Mask_Y_ID 0x2
+#define Mask_PID_Parameter_Block_Offset 0xf
+#define Mask_Instance_1 0x3
+#define Mask_Instance_2 0xc
+#define Mask_PID_Device_Managed_Pool 0x1
+#define Mask_PID_Shared_Parameter_Blocks 0x2
+
 enum PID_Effect_Type_Enum {
     PID_ET_Constant_Force = 1,
     PID_ET_Ramp = 2,
@@ -43,42 +76,6 @@ enum PID_Block_Load_Status_Enum {
     PID_Block_Load_Error = 3,
 };
 
-enum Report_ID_Enum {
-    ID_PID_PID_State_Report = 2,
-    ID_PID_Set_Effect_Report = 1,
-    ID_PID_Set_Envelope_Report = 2,
-    ID_PID_Set_Condition_Report = 3,
-    ID_PID_Set_Periodic_Report = 4,
-    ID_PID_Set_Constant_Force_Report = 5,
-    ID_PID_Set_Ramp_Force_Report = 6,
-    ID_PID_Custom_Force_Data_Report = 7,
-    ID_PID_Download_Force_Sample = 8,
-    ID_PID_Effect_Operation_Report = 10,
-    ID_PID_PID_Block_Free_Report = 11,
-    ID_PID_PID_Device_Control = 12,
-    ID_PID_Device_Gain_Report = 13,
-    ID_PID_Set_Custom_Force_Report = 14,
-    ID_PID_Create_New_Effect_Report = 5,
-    ID_PID_PID_Block_Load_Report = 6,
-    ID_PID_PID_Pool_Report = 7,
-};
-
-const uint8_t Mask_PID_Device_Paused = 0x1;
-const uint8_t Mask_PID_Actuators_Enabled = 0x2;
-const uint8_t Mask_PID_Safety_Switch = 0x4;
-const uint8_t Mask_PID_Actuator_Override_Switch = 0x8;
-const uint8_t Mask_PID_Actuator_Power = 0x10;
-const uint8_t Mask_PID_Effect_Playing = 0x1;
-const uint8_t Mask_PID_Effect_Block_Index = 0x7f;
-const uint8_t Mask_X_ID = 0x1;
-const uint8_t Mask_Y_ID = 0x2;
-const uint8_t Mask_PID_Direction_Enable = 0x1;
-const uint8_t Mask_PID_Parameter_Block_Offset = 0xf;
-const uint8_t Mask_Instance_1 = 0x3;
-const uint8_t Mask_Instance_2 = 0xc;
-const uint8_t Mask_PID_Device_Managed_Pool = 0x1;
-const uint8_t Mask_PID_Shared_Parameter_Blocks = 0x2;
-
 typedef struct _PID_PID_State_Report {
     //Report_ID:2
     uint8_t vars_0;
@@ -113,7 +110,7 @@ typedef struct _PID_Set_Effect_Report {
     uint16_t pid_sample_period;
     //Logical_Maximum:32767
     //Unit:Eng_Lin_Time
-    //Unit_Exponent:-3
+    //Unit_Exponent:237
     uint8_t pid_gain;
     //Logical_Maximum:255
     uint8_t pid_trigger_button;
@@ -125,17 +122,15 @@ typedef struct _PID_Set_Effect_Report {
         //Check Pads
         //Logical_Maximum:1
     } PID_Axes_Enable;
-    uint8_t vars_0;
-    //pid_direction_enable,
-    //Check Pads
+    //6-pads added
     //Logical_Maximum:1
-    //5-pads added
+    uint8_t pid_direction_enable;
     //Logical_Maximum:1
     struct {
         uint8_t instance_1;
         uint8_t instance_2;
         //Logical_Maximum:180
-        //Unit_Exponent:-2
+        //Unit_Exponent:238
     } PID_Direction;
 } PID_Set_Effect_Report;
 
@@ -151,7 +146,7 @@ typedef struct _PID_Set_Envelope_Report {
     uint16_t pid_fade_time;
     //Logical_Maximum:32767
     //Unit:Eng_Lin_Time
-    //Unit_Exponent:-3
+    //Unit_Exponent:237
 } PID_Set_Envelope_Report;
 
 typedef struct _PID_Set_Condition_Report {
@@ -190,11 +185,11 @@ typedef struct _PID_Set_Periodic_Report {
     uint8_t pid_phase;
     //Logical_Maximum:255
     //Unit:Eng_Rot_Angular_Pos
-    //Unit_Exponent:-2
+    //Unit_Exponent:238
     uint16_t pid_period;
     //Logical_Maximum:32767
     //Unit:Eng_Lin_Time
-    //Unit_Exponent:-3
+    //Unit_Exponent:237
 } PID_Set_Periodic_Report;
 
 typedef struct _PID_Set_Constant_Force_Report {
@@ -281,7 +276,7 @@ typedef struct _PID_Set_Custom_Force_Report {
     uint16_t pid_sample_period;
     //Logical_Maximum:32767
     //Unit:Eng_Lin_Time
-    //Unit_Exponent:-3
+    //Unit_Exponent:237
 } PID_Set_Custom_Force_Report;
 
 typedef struct _PID_Create_New_Effect_Report {
@@ -292,8 +287,6 @@ typedef struct _PID_Create_New_Effect_Report {
         //Logical_Minimum:1
     } PID_Effect_Type;
     uint16_t byte_count;
-    //Logical_Maximum:511
-    //6-pads added
     //Logical_Maximum:511
 } PID_Create_New_Effect_Report;
 
@@ -307,6 +300,7 @@ typedef struct _PID_PID_Block_Load_Report {
         //Logical_Maximum:3
         //Logical_Minimum:1
     } PID_Block_Load_Status;
+    uint16_t pid_ram_pool_available;
     //Logical_Maximum:65535
 } PID_PID_Block_Load_Report;
 
@@ -323,6 +317,7 @@ typedef struct _PID_PID_Pool_Report {
     //6-pads added
     //Logical_Maximum:1
 } PID_PID_Pool_Report;
+
 
 #ifdef __cplusplus
 }

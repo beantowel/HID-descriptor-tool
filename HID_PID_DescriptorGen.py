@@ -20,60 +20,60 @@ def u_Byte_Size(x):
 		return 2
 	if x<=0xFFFFFFFF:
 		return 4 #0b11 represents 4
-def toComplementBytes(x,size):
+def ToComplement(x,size):
 	x=int(x)
 	if x<0:
 		x=x+2**size
-	return hex(x)
-def prefixZero(hdata,byteSize):
-	'''fill prefixZero to complete a byte'''
+	return x
+def PrefixZero(hdata,byteSize):
+	'''fill PrefixZero to complete a byte'''
 	#input like '0xNNN'
 	lsize=len(hdata)-2
-	while(lsize!=byteSize*2): #0xN-->0x0N
+	while(lsize<byteSize*2): #0xN-->0x0N
 		hdata="0x0"+hdata[2:]
 		lsize=len(hdata)-2
 	return hdata
 def SplitToLittleEndien(hdata,byteSize):
 	datalist=[]
-	hdata=prefixZero(hdata,byteSize)
+	hdata=PrefixZero(hdata,byteSize)
 	for i in range(0,byteSize*2,2): #0x1234
 		datalist.insert(0,"0x"+hdata[2+i:4+i]) #[0x34,0x12]
 	return datalist
-def ShortItem(prefix,x,isSign):
+def ShortItem(prefix,data,byteSize,changePage):
 	'''construct short item by prefix'''
 	global bytecount
-
-	if prefix==0xc0: #End_Collection exception
-		bytecount+=1
-		return "0xc0",[]
-	if isSign:
-		byteSize=Byte_Size(x)
-	else:
-		byteSize=u_Byte_Size(x)
-
 	if byteSize==4:
 		pre=prefix+3 #0b11 represents 4
 	else:
 		pre=prefix+byteSize
+	hdata=hex(data)
 	pre=hex(pre)
-	pre=prefixZero(pre,1)
-
-	size=byteSize*8
-	if prefix==0x54: #Unit_Exponent exception
-		size=4 #one nibble
-
-	hdata=toComplementBytes(x,size)
+	pre=PrefixZero(pre,1)
 	data=SplitToLittleEndien(hdata,byteSize)
-
-	bytecount=bytecount+1+len(data)
+	if changePage!=None:
+		exData=hex(changePage[1])
+		exData=PrefixZero(exData,2)
+		exData=SplitToLittleEndien(exData,2)
+		data.extend(exData)
+	bytecount+=1 + len(data)
 	return pre,data
-
+def MatchDefine(defSets,findFunc):
+	'''findFunc example re.search('\\b'+regex[1]+'\\b',line)
+		return defSets key when a value match
+	'''
+	for defDict in [t for aSet in defSets for t in aSet.items()]:
+		result=findFunc(defDict[0])
+		if result:
+			return defDict
+	return None
 fileIn="HID_Descriptor_Input.rptDsc"
 fileOut=open("HID_Descriptor.out",'w')
 lines=open(fileIn).readlines()
 bytecount=0
+usagePage=None
 #descriptor parser
 for line in lines:
+	print(line) #echo
 	line=line.expandtabs(tabsize=4)
 	copyline=line
 	line=line.lstrip()
@@ -81,30 +81,43 @@ for line in lines:
 	if pos>=0:
 		line=line[0:pos]
 
-	b=False
-	for items in HID_Items:
-		for regex in items:
-			item=re.findall('\\b'+regex+'\\b',line)
-			for i in item:
-				prefix=items[regex]
-				value=re.findall('\(.*\)',line)
-				for consts in HID_Constants:
-					for regex1 in consts:
-						const=re.findall('\('+regex1+'\)',value[0])
-						for j in const:
-							x=consts[regex1]
-							out=ShortItem(prefix,x,False) #preDefinedConstant
-							b=True
-				if not(b) and len(value[0])>2:
-					x=int(value[0][1:-1])
-					out=ShortItem(prefix,x,True) #value
-					b=True
-				if not(b):
-					out=ShortItem(prefix,0,True) #defalut x=0
-					b=True
-	if not(b):
+	tfunc=lambda regex:re.search('\\b'+regex+'\\b',line) #match item
+	item=MatchDefine(HID_Items, tfunc)
+	if item==None: #failed matching item
 		continue
-	#print(out)
+
+	inBracket=re.search('\(.*\)',line).group(0) #extract inBracket
+
+	tfunc=lambda regex:re.search(':'+regex+'\)',inBracket)
+	changePage=MatchDefine([Usage_Page_Constants],tfunc)
+
+	defSet=HID_Constants
+	if item[0]=='Usage':
+		defSet=[UsageByPage[usagePage]] #switch to usagePage
+		if changePage!=None:
+			defSet=[UsageByPage[changePage[0]]]
+	else:
+		defSet=[ConstByItem[item[0]]]
+
+	tfunc=lambda regex:re.search('\('+regex+'[\):]',inBracket)
+	value=MatchDefine(defSet, tfunc)
+	if value!=None:
+		out=ShortItem(item[1],value[1],u_Byte_Size(value[1]),changePage)
+		#unsigned preDefinedConstant
+	else:
+		if len(inBracket[1:-1])>0:
+			x=int(inBracket[1:-1])
+			size=Byte_Size(x)*8
+			if item[0]=='Unit_Exponent': #Unit_Exponent exception
+				size=4
+			data=ToComplement(x,size)
+			out=ShortItem(item[1],data,Byte_Size(x),changePage) #signed value
+		else:
+			out=ShortItem(item[1],0,0,changePage) #defalut none value
+
+	if item[0]=='Usage_Page':
+		usagePage=value[0]
+
 	fileOut.write(out[0]+',') # prefix
 	for i in out[1]: # data
 		fileOut.write(i+',')

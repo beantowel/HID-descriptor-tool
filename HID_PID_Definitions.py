@@ -23,10 +23,10 @@ Local_Items={
     "Usage_Maximum" : 0x28,
 }
 IOF_Constants={
-    "IOF_Defalut_Items" : 0x0,
-    "IOF_Constant"      : 0x3,
+    "IOF_ConstArry"     : 0x1,
+    "IOF_ConstVar"      : 0x3,
     "IOF_Variable"      : 0x2,
-    "IOF_Array"         : 0x1,
+    "IOF_Array"         : 0x0,
     "IOF_VariableBuffer": 0x0102,
 }
 Clc_Constants={

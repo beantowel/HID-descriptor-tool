@@ -110,7 +110,7 @@ typedef struct _PID_Set_Effect_Report {
     uint16_t pid_sample_period;
     //Logical_Maximum:32767
     //Unit:Eng_Lin_Time
-    //Unit_Exponent:237
+    //Unit_Exponent:-3
     uint8_t pid_gain;
     //Logical_Maximum:255
     uint8_t pid_trigger_button;
@@ -121,16 +121,16 @@ typedef struct _PID_Set_Effect_Report {
         //x_id,y_id,
         //Check Pads
         //Logical_Maximum:1
+        //6-pads added
+        //Logical_Maximum:1
     } PID_Axes_Enable;
-    //6-pads added
-    //Logical_Maximum:1
     uint8_t pid_direction_enable;
     //Logical_Maximum:1
     struct {
         uint8_t instance_1;
         uint8_t instance_2;
         //Logical_Maximum:180
-        //Unit_Exponent:238
+        //Unit_Exponent:-2
     } PID_Direction;
 } PID_Set_Effect_Report;
 
@@ -146,7 +146,7 @@ typedef struct _PID_Set_Envelope_Report {
     uint16_t pid_fade_time;
     //Logical_Maximum:32767
     //Unit:Eng_Lin_Time
-    //Unit_Exponent:237
+    //Unit_Exponent:-3
 } PID_Set_Envelope_Report;
 
 typedef struct _PID_Set_Condition_Report {
@@ -185,11 +185,11 @@ typedef struct _PID_Set_Periodic_Report {
     uint8_t pid_phase;
     //Logical_Maximum:255
     //Unit:Eng_Rot_Angular_Pos
-    //Unit_Exponent:238
+    //Unit_Exponent:-2
     uint16_t pid_period;
     //Logical_Maximum:32767
     //Unit:Eng_Lin_Time
-    //Unit_Exponent:237
+    //Unit_Exponent:-3
 } PID_Set_Periodic_Report;
 
 typedef struct _PID_Set_Constant_Force_Report {
@@ -220,6 +220,7 @@ typedef struct _PID_Custom_Force_Data_Report {
     //Logical_Minimum:1
     uint16_t pid_custom_force_data_offset;
     //Logical_Maximum:10000
+    //Not supported Buffer usage
     //Logical_Maximum:127
     //Logical_Minimum:-127
 } PID_Custom_Force_Data_Report;
@@ -276,7 +277,7 @@ typedef struct _PID_Set_Custom_Force_Report {
     uint16_t pid_sample_period;
     //Logical_Maximum:32767
     //Unit:Eng_Lin_Time
-    //Unit_Exponent:237
+    //Unit_Exponent:-3
 } PID_Set_Custom_Force_Report;
 
 typedef struct _PID_Create_New_Effect_Report {

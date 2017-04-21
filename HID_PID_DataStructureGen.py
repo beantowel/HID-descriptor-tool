@@ -176,6 +176,7 @@ extern "C" {
 #endif
 
 #include "stdint.h"
+#pragma pack(1)
 
 '''
 fileOut.write(prefixText)

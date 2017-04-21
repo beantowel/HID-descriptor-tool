@@ -14,13 +14,10 @@ extern "C" {
 #define ID_PID_Set_Periodic_Report 4
 #define ID_PID_Set_Constant_Force_Report 5
 #define ID_PID_Set_Ramp_Force_Report 6
-#define ID_PID_Custom_Force_Data_Report 7
-#define ID_PID_Download_Force_Sample 8
 #define ID_PID_Effect_Operation_Report 10
 #define ID_PID_PID_Block_Free_Report 11
 #define ID_PID_PID_Device_Control 12
 #define ID_PID_Device_Gain_Report 13
-#define ID_PID_Set_Custom_Force_Report 14
 #define ID_PID_Create_New_Effect_Report 5
 #define ID_PID_PID_Block_Load_Report 6
 #define ID_PID_PID_Pool_Report 7
@@ -30,13 +27,9 @@ extern "C" {
 #define Mask_PID_Safety_Switch 0x4
 #define Mask_PID_Actuator_Override_Switch 0x8
 #define Mask_PID_Actuator_Power 0x10
-#define Mask_PID_Effect_Playing 0x1
-#define Mask_PID_Effect_Block_Index 0x7f
+#define Mask_PID_Effect_Playing 0x20
 #define Mask_X_ID 0x1
 #define Mask_Y_ID 0x2
-#define Mask_PID_Parameter_Block_Offset 0xf
-#define Mask_Instance_1 0x3
-#define Mask_Instance_2 0xc
 #define Mask_PID_Device_Managed_Pool 0x1
 #define Mask_PID_Shared_Parameter_Blocks 0x2
 
@@ -52,7 +45,6 @@ enum PID_Effect_Type_Enum {
     PID_ET_Damper = 9,
     PID_ET_Inertia = 10,
     PID_ET_Friction = 11,
-    PID_ET_Custom_Force_Data = 12,
 };
 
 enum PID_Effect_Operation_Enum {
@@ -79,30 +71,24 @@ enum PID_Block_Load_Status_Enum {
 typedef struct _PID_PID_State_Report {
     //Report_ID:2
     uint8_t vars_0;
-    //pid_device_paused,pid_actuators_enabled,pid_safety_switch,pid_actuator_override_switch,pid_actuator_power,
+    //pid_device_paused,pid_actuators_enabled,pid_safety_switch,pid_actuator_override_switch,pid_actuator_power,pid_effect_playing,
     //Check Pads
     //Logical_Maximum:1
-    //3-pads added
+    //2-pads added
     //Logical_Maximum:1
-    uint8_t vars_1;
-    //pid_effect_playing,
-    //Check Pads
-    //Logical_Maximum:1
-    uint8_t vars_2;
-    //pid_effect_block_index,
-    //Check Pads
-    //Logical_Maximum:40
+    uint8_t pid_effect_block_index;
+    //Logical_Maximum:20
     //Logical_Minimum:1
 } PID_PID_State_Report;
 
 typedef struct _PID_Set_Effect_Report {
     //Report_ID:1
     uint8_t pid_effect_block_index;
-    //Logical_Maximum:40
+    //Logical_Maximum:20
     //Logical_Minimum:1
     struct {
         enum PID_Effect_Type_Enum pid_effect_type_enum_0;
-        //Logical_Maximum:12
+        //Logical_Maximum:11
         //Logical_Minimum:1
     } PID_Effect_Type;
     uint16_t pid_duration;
@@ -137,11 +123,11 @@ typedef struct _PID_Set_Effect_Report {
 typedef struct _PID_Set_Envelope_Report {
     //Report_ID:2
     uint8_t pid_effect_block_index;
-    //Logical_Maximum:40
+    //Logical_Maximum:20
     //Logical_Minimum:1
-    uint8_t pid_attack_level;
-    uint8_t pid_fade_level;
-    //Logical_Maximum:255
+    uint16_t pid_attack_level;
+    uint16_t pid_fade_level;
+    //Logical_Maximum:10000
     uint16_t pid_attack_time;
     uint16_t pid_fade_time;
     //Logical_Maximum:32767
@@ -152,38 +138,33 @@ typedef struct _PID_Set_Envelope_Report {
 typedef struct _PID_Set_Condition_Report {
     //Report_ID:3
     uint8_t pid_effect_block_index;
-    //Logical_Maximum:40
+    //Logical_Maximum:20
     //Logical_Minimum:1
-    uint8_t vars_0;
-    //pid_parameter_block_offset,
-    //Check Pads
+    uint8_t pid_parameter_block_offset;
     //Logical_Maximum:1
-    struct {
-        uint8_t vars_0;
-        //instance_1,instance_2,
-        //Check Pads
-        //Logical_Maximum:1
-    } PID_Type_Specific_Block_Offset;
-    int8_t pid_cp_offset;
-    //Logical_Maximum:127
-    //Logical_Minimum:-128
-    int8_t pid_positive_coefficient;
-    //Logical_Maximum:127
-    //Logical_Minimum:-128
+    int16_t pid_cp_offset;
+    int16_t pid_dead_band;
+    int16_t pid_positive_coefficient;
+    int16_t pid_negative_coefficient;
+    //Logical_Maximum:10000
+    //Logical_Minimum:-10000
+    uint16_t pid_positive_saturation;
+    uint16_t pid_negative_saturation;
+    //Logical_Maximum:10000
 } PID_Set_Condition_Report;
 
 typedef struct _PID_Set_Periodic_Report {
     //Report_ID:4
     uint8_t pid_effect_block_index;
-    //Logical_Maximum:40
+    //Logical_Maximum:20
     //Logical_Minimum:1
-    uint8_t pid_magnitude;
-    //Logical_Maximum:255
-    int8_t pid_offset;
-    //Logical_Maximum:127
-    //Logical_Minimum:-128
+    uint16_t pid_magnitude;
+    //Logical_Maximum:10000
+    int16_t pid_offset;
+    //Logical_Maximum:10000
+    //Logical_Minimum:-10000
     uint8_t pid_phase;
-    //Logical_Maximum:255
+    //Logical_Maximum:180
     //Unit:Eng_Rot_Angular_Pos
     //Unit_Exponent:-2
     uint16_t pid_period;
@@ -195,17 +176,17 @@ typedef struct _PID_Set_Periodic_Report {
 typedef struct _PID_Set_Constant_Force_Report {
     //Report_ID:5
     uint8_t pid_effect_block_index;
-    //Logical_Maximum:40
+    //Logical_Maximum:20
     //Logical_Minimum:1
     int16_t pid_magnitude;
-    //Logical_Maximum:255
-    //Logical_Minimum:-255
+    //Logical_Maximum:10000
+    //Logical_Minimum:-10000
 } PID_Set_Constant_Force_Report;
 
 typedef struct _PID_Set_Ramp_Force_Report {
     //Report_ID:6
     uint8_t pid_effect_block_index;
-    //Logical_Maximum:40
+    //Logical_Maximum:20
     //Logical_Minimum:1
     int8_t pid_ramp_start;
     int8_t pid_ramp_end;
@@ -213,30 +194,10 @@ typedef struct _PID_Set_Ramp_Force_Report {
     //Logical_Minimum:-128
 } PID_Set_Ramp_Force_Report;
 
-typedef struct _PID_Custom_Force_Data_Report {
-    //Report_ID:7
-    uint8_t pid_effect_block_index;
-    //Logical_Maximum:40
-    //Logical_Minimum:1
-    uint16_t pid_custom_force_data_offset;
-    //Logical_Maximum:10000
-    //Not supported Buffer usage
-    //Logical_Maximum:127
-    //Logical_Minimum:-127
-} PID_Custom_Force_Data_Report;
-
-typedef struct _PID_Download_Force_Sample {
-    //Report_ID:8
-    int8_t x_id;
-    int8_t y_id;
-    //Logical_Maximum:127
-    //Logical_Minimum:-127
-} PID_Download_Force_Sample;
-
 typedef struct _PID_Effect_Operation_Report {
     //Report_ID:10
     uint8_t pid_effect_block_index;
-    //Logical_Maximum:40
+    //Logical_Maximum:20
     //Logical_Minimum:1
     struct {
         enum PID_Effect_Operation_Enum pid_effect_operation_enum_0;
@@ -250,7 +211,7 @@ typedef struct _PID_Effect_Operation_Report {
 typedef struct _PID_PID_Block_Free_Report {
     //Report_ID:11
     uint8_t pid_effect_block_index;
-    //Logical_Maximum:40
+    //Logical_Maximum:20
     //Logical_Minimum:1
 } PID_PID_Block_Free_Report;
 
@@ -267,24 +228,11 @@ typedef struct _PID_Device_Gain_Report {
     //Logical_Maximum:255
 } PID_Device_Gain_Report;
 
-typedef struct _PID_Set_Custom_Force_Report {
-    //Report_ID:14
-    uint8_t pid_effect_block_index;
-    //Logical_Maximum:40
-    //Logical_Minimum:1
-    uint8_t pid_sample_count;
-    //Logical_Maximum:255
-    uint16_t pid_sample_period;
-    //Logical_Maximum:32767
-    //Unit:Eng_Lin_Time
-    //Unit_Exponent:-3
-} PID_Set_Custom_Force_Report;
-
 typedef struct _PID_Create_New_Effect_Report {
     //Report_ID:5
     struct {
         enum PID_Effect_Type_Enum pid_effect_type_enum_0;
-        //Logical_Maximum:12
+        //Logical_Maximum:11
         //Logical_Minimum:1
     } PID_Effect_Type;
     uint16_t byte_count;
@@ -294,7 +242,7 @@ typedef struct _PID_Create_New_Effect_Report {
 typedef struct _PID_PID_Block_Load_Report {
     //Report_ID:6
     uint8_t pid_effect_block_index;
-    //Logical_Maximum:40
+    //Logical_Maximum:20
     //Logical_Minimum:1
     struct {
         enum PID_Block_Load_Status_Enum pid_block_load_status_enum_0;

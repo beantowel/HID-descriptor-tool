@@ -177,6 +177,7 @@ extern "C" {
 
 #include "stdint.h"
 #pragma pack(1)
+#pragma pack(push)
 
 '''
 fileOut.write(prefixText)
@@ -211,6 +212,7 @@ for line in Outputs: #structs
         fileOut.write('\n')
 
 sucfixText = '''
+#pragma pack(pop)
 #ifdef __cplusplus
 }
 #endif

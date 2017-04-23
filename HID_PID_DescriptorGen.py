@@ -112,8 +112,8 @@ for line in lines:
 		if len(inBracket[1:-1])>0:
 			x=int(inBracket[1:-1])
 			size=Byte_Size(x)*8
-			if item[0]=='Unit_Exponent': #Unit_Exponent exception
-				size=4
+			# if item[0]=='Unit_Exponent': #Unit_Exponent exception
+			# 	size=4 #fucking usb.org's doc
 			data=ToComplement(x,size)
 			out=ShortItem(item[1],data,Byte_Size(x),changePage) #signed value
 		else:

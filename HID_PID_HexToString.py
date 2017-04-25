@@ -30,11 +30,8 @@ def valueByHex(item, len, hexd):
 		print('value constant missing')
 	if len==0:
 		return ''
-	if item=='Unit_Exponent' and hexd>7:
-		hexd = 0x10 - hexd #calculate comlement
-		hexd = -hexd
-		return hexd
-	if hexd > (1<<len*8-1)-1: #calculate comlement
+
+	if hexd > (1<<len*8-1)-1: #calculate complement
 		hexd = (1<<(len*8)) - hexd
 		hexd = -hexd
 		return hexd

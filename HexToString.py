@@ -36,8 +36,8 @@ def valueByHex(item, len, hexd):
 		hexd = -hexd
 		return hexd
 	return hexd
-fileIn = "HID_Hex_Input.c"
-fileOut= open("HID_HexToString.rptDsc",'w')
+fileIn = "Hex_Input.c"
+fileOut= open("DscOutput.rptDsc",'w')
 lines  = open(fileIn).readlines()
 tabcnt = 0
 for line in lines:

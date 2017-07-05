@@ -94,8 +94,8 @@ def ConstractStru(mainItem,value):
         if glStat['Unit_Exponent']!='0':
             Outputs.append('//Unit_Exponent:'+glStat['Unit_Exponent'])
 
-fileIn     = "HID_Descriptor_Input.rptDsc"
-fileOut    = open("HID_DataStructure.h",'w')
+fileIn     = "DscInput.rptDsc"
+fileOut    = open("rptStructureDef.h",'w')
 lines      = open(fileIn).readlines()
 glStat     = {
     'Unit':'Unit_None',

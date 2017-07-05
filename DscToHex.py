@@ -67,8 +67,8 @@ def MatchDefine(defSets,findFunc):
 		if result:
 			return defDict
 	return None
-fileIn="HID_Descriptor_Input.rptDsc"
-fileOut=open("HID_Descriptor.out",'w')
+fileIn="DscInput.rptDsc"
+fileOut=open("Hex.out",'w')
 lines=open(fileIn).readlines()
 bytecount=0
 usagePage=None

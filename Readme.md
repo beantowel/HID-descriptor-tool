@@ -1,5 +1,5 @@
 # HID-PID Descriptor tool
-an extendable hid descriptor tool, implements a free conversion between hexdemical codes, data structure definition and the report descriptor written in natural language.  
+an extendable hid descriptor tool, implements a free conversion between hexdemical codes, data structure definition and the report descriptor written in higher level language.  
 
 ## Files  
 - \rptDsc:  

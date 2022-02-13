@@ -36,12 +36,12 @@ def valueByHex(item, len, hexd):
     hexd = -hexd
     return hexd
   return hexd
-fileIn = "Hex_Input.c"
-fileOut= open("DscOutput.rptDsc",'w')
+fileIn = "km.c"
+fileOut= open("km.rptDsc",'w')
 lines  = open(fileIn).readlines()
 tabcnt = 0
 for line in lines:
-  # print('------',line) #echo
+  print('------',line.rstrip()) #echo
   line=line.expandtabs(tabsize=4)
   key=line
   pos=line.find('//') #remove comments

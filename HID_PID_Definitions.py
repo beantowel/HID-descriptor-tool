@@ -60,6 +60,7 @@ GenericDesktop_Constants={
     "Rx_ID"        : 0x33,
     "Ry_ID"        : 0x34,
     "Rz_ID"        : 0x35,
+    "Hat_ID"       : 0x39,
     "Byte_Count"   : 0x3B,
 }
 SimulationControl_Constants={

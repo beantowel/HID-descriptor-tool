@@ -48,6 +48,8 @@ Usage_Page_Constants={
     "Button_ID"          : 0x09,
     "Physical_Interface" : 0x0F,
     "Ordinal_ID"         : 0x0A,
+    "Consumer_Page_ID"   : 0x0C,
+    "Vendor_Page_0"      : 0xFF00,
 }
 GenericDesktop_Constants={
 #Generic Desktop Page
@@ -187,6 +189,8 @@ PID_Usage_Constants={
     "PID_Create_New_Effect_Report"         : 0xAB,
     "PID_RAM_Pool_Available"               : 0xAC,
 }
+Consumer_Page_Constants={
+}
 HID_Items=[Main_Items,Global_Items,Local_Items]
 HID_Constants=[
     GenericDesktop_Constants,
@@ -205,6 +209,8 @@ UsageByPage={
     "Button_ID"          : Button_Constants,
     "Physical_Interface" : PID_Usage_Constants,
     "Ordinal_ID"         : Ordinal_Constans,
+    "Consumer_Page_ID"   : Consumer_Page_Constants,
+    "Vendor_Page_0"      : {},
 }
 ConstByItem={
     "Input"          : IOF_Constants,

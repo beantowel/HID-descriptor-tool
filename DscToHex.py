@@ -49,15 +49,15 @@ def ShortItem(prefix,data,byteSize,changePage):
   hdata=hex(data)
   data=SplitToLittleEndien(hdata,byteSize)
   if changePage!=None:
-    pre=prefix+3
-    exData=hex(changePage[1])
-    exData=PrefixZero(exData,2)
-    exData=SplitToLittleEndien(exData,2)
+    pre = prefix + 3
+    exData = hex(changePage[1])
+    exData = PrefixZero(exData,2)
+    exData = SplitToLittleEndien(exData,2)
     data.extend(exData)
-  pre=hex(pre)
-  pre=PrefixZero(pre,1)
-  bytecount+=1 + len(data)
-  return pre,data
+  pre = hex(pre)
+  pre = PrefixZero(pre,1)
+  bytecount += 1 + len(data)
+  return pre, data
 def MatchDefine(defSets,findFunc):
   '''findFunc example re.search('\\b'+regex[1]+'\\b',line)
     return defSets key when a value match
@@ -67,27 +67,29 @@ def MatchDefine(defSets,findFunc):
     if result:
       return defDict
   return None
-fileIn="DscInput.rptDsc"
-fileOut=open("Hex.out",'w')
+fileIn="km.rptDsc"
+fileOut=open("km.out",'w')
 lines=open(fileIn).readlines()
 bytecount=0
 usagePage=None
 #descriptor parser
 for line in lines:
-  print(line) #echo
+  print(line.rstrip()) #echo
   line=line.expandtabs(tabsize=4)
   copyline=line
   line=line.lstrip()
-  pos=line.find('//')
-  if pos>=0:
-    line=line[0:pos]
+  comment=line.find('//')
+  if comment >= 0:
+    line=line[0:comment]
 
   tfunc=lambda regex:re.search('\\b'+regex+'\\b',line) #match item
   item=MatchDefine(HID_Items, tfunc)
   if item==None: #failed matching item
     continue
+  print('item: ', item)
 
   inBracket=re.search('\(.*\)',line).group(0) #extract inBracket
+  print('inBracket: ', inBracket)
 
   tfunc=lambda regex:re.search(':'+regex+'\)',inBracket)
   changePage=MatchDefine([Usage_Page_Constants],tfunc)
@@ -102,31 +104,36 @@ for line in lines:
 
   tfunc=lambda regex:re.search('\('+regex+'[\):]',inBracket)
   value=MatchDefine(defSet, tfunc)
+  print('value: ', value)
+
+  num_value=None
   if value!=None:
-    byteSize=u_Byte_Size(value[1])
+    num_value=value[1]
+  elif len(inBracket[1:-1]) > 0:
+    num_value=int(inBracket[1:-1])
+  print('num: ', num_value)
+
+  if value!=None:
+    byteSize=u_Byte_Size(num_value)
     if changePage!=None:
       byteSize=2
-    out=ShortItem(item[1],value[1],byteSize,changePage)
+    out=ShortItem(item[1],num_value,byteSize,changePage)
     #unsigned preDefinedConstant
+  elif len(inBracket[1:-1])>0:
+    size=Byte_Size(num_value) * 8
+    data=ToComplement(num_value, size)
+    out=ShortItem(item[1],data,Byte_Size(num_value),changePage) # signed value
   else:
-    if len(inBracket[1:-1])>0:
-      x=int(inBracket[1:-1])
-      size=Byte_Size(x)*8
-      # if item[0]=='Unit_Exponent': #Unit_Exponent exception
-      #   size=4 #fucking usb.org's doc
-      data=ToComplement(x,size)
-      out=ShortItem(item[1],data,Byte_Size(x),changePage) #signed value
-    else:
-      out=ShortItem(item[1],0,0,changePage) #defalut none value
+    out=ShortItem(item[1],0,0,changePage) #default none value
 
-  if item[0]=='Usage_Page': #update Usage_Page
+  if item[0]=='Usage_Page' and value != None:
     usagePage=value[0]
 
-  fileOut.write(out[0]+',') # prefix
+  fileOut.write(out[0] + ',') # prefix
   for i in out[1]: # data
-    fileOut.write(i+',')
-  for i in range(0,4-len(out[1])): #max 4 byte
+    fileOut.write(i + ',')
+  for i in range(0, 4 - len(out[1])): # max 4 bytes
     fileOut.write('     ')
-  fileOut.write(" //"+copyline) #copy source as comments
-fileOut.write("//Total:"+str(bytecount)+" Bytes")
+  fileOut.write(" // " + copyline) #copy source as comments
+fileOut.write("// Total:" + str(bytecount) + " Bytes")
 fileOut.close()

@@ -65,7 +65,7 @@ for line in lines:
   if item == 'End_Collection':
     tabcnt-=1
   for i in range(0,tabcnt):
-    fileOut.write(' ');
+    fileOut.write('  ');
   fileOut.write(item+'('+str(value)+'),\n')
   if item == 'Collection':
     tabcnt+=1

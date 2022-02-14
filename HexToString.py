@@ -69,7 +69,7 @@ for line in lines:
     tabcnt-=1
   for i in range(0,tabcnt):
     fileOut.write('  ');
-  fileOut.write(item+'('+str(value)+'),\n')
+  fileOut.write(item + ' (' + str(value) + '),\n')
   if item == 'COLLECTION':
-    tabcnt+=1
+    tabcnt += 1
 fileOut.close()

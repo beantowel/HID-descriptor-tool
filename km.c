@@ -2,7 +2,7 @@
   0x05, 0x01,                   // USAGE_PAGE (Generic Desktop)
   0x09, 0x06,                   // USAGE (Keyboard)
   0xA1, 0x01,                   // COLLECTION (Application)
-  0x85, KEYBOARD_REPORT_ID,     // REPORT_ID (1)
+  0x85, 0x03,     // REPORT_ID (1)
   0x75, 0x01,                   // REPORT_SIZE (1)
   0x95, 0x08,                   // REPORT_COUNT (8)
   0x05, 0x07,                   // USAGE_PAGE (Keyboard)
@@ -38,7 +38,7 @@
   0x05, 0x0C,                   // USAGE_PAGE (Consumer Devices)
   0x09, 0x01,                   // USAGE (Consumer Control)
   0xA1, 0x01,                   // COLLECTION (Application)
-  0x85, BIT_MAPPED_REPORT_ID,   //    REPORT_ID (2)
+  0x85, 0x05,   //    REPORT_ID (2)
   0x15, 0x00,                   //    LOGICAL_MINIMUM (0)
   0x25, 0x01,                   //    LOGICAL_MAXIMUM (1)
   0x75, 0x01,                   //    REPORT_SIZE (1)
@@ -74,7 +74,7 @@
   0x05, 0x01,                   //  Usage Page (Generic Desktop),
   0x09, 0x02,                   //  Usage (Mouse),
   0xA1, 0x01,                   //  Collection: (Application),
-  0x85, MOUSE_REPORT_ID,        //  REPORT_ID (6)
+  0x85, 0x04,        //  REPORT_ID (6)
   0x09, 0x01,                   //  Usage (Pointer),
   0xA1, 0x00,                   //  Collection: (Linked),
   0x05, 0x09,                   //  Usage Page (Buttons),
@@ -116,8 +116,8 @@
   0x06, 0x00, 0xff,              // USAGE_PAGE (Vendor Defined Page 1)
   0x09, 0x01,                    // USAGE (Vendor Usage 1)
   0xa1, 0x01,                    // COLLECTION (Application)
-  0x85, UPGRADE_IN_REPORT_ID,    //     Report ID(3)
-  0x95, UPGRADE_IN_REPORT_SIZE - 1, //   REPORT_COUNT
+  0x85, 0x2,    //     Report ID(3)
+  0x95, 0x3a, //   REPORT_COUNT
   0x75, 0x08,                    //   REPORT_SIZE (8)
   0x26, 0xff, 0x00,              //   LOGICAL_MAXIMUM (255)
   0x15, 0x00,                    //   LOGICAL_MINIMUM (0)
@@ -125,8 +125,8 @@
   0x81, 0x02,                    //   INPUT (Data,Var,Abs)
 
   // Upgrade Report - Out
-  0x85, UPGRADE_OUT_REPORT_ID,   //   Report ID(4)
-  0x95, UPGRADE_OUT_REPORT_SIZE - 1, //   REPORT_COUNT
+  0x85, 0x01,   //   Report ID(4)
+  0x95, 0x3a, //   REPORT_COUNT
   0x75, 0x08,                    //   REPORT_SIZE (8)
   0x26, 0xff, 0x00,              //   LOGICAL_MAXIMUM (255)
   0x15, 0x00,                    //   LOGICAL_MINIMUM (0)
@@ -139,7 +139,7 @@
   0x06, 0x00, 0xff,              // USAGE_PAGE (Vendor Defined Page 1)
   0x09, 0x01,                    // USAGE (Vendor Usage 1)
   0xa1, 0x01,                    // COLLECTION (Application)
-  0x85, KEY_LAYER_REPORT_ID,     // Report ID(07)
+  0x85, 0x07,     // Report ID(07)
   0x95, 0x02,                    // REPORT_COUNT (2)
   0x75, 0x08,                    // REPORT_SIZE (8)
   0x26, 0xff, 0x00,              // LOGICAL_MAXIMUM (255)
@@ -153,7 +153,7 @@
   0x06, 0x00, 0xff,              // USAGE_PAGE (Vendor Defined Page 1)
   0x09, 0x01,                    // USAGE (Vendor Usage 1)
   0xa1, 0x01,                    // COLLECTION (Application)
-  0x85, SOFT_MACRO_REPORT_ID,    // Report ID(09)
+  0x85, 0x08,    // Report ID(09)
   0x95, 0x02,                    // REPORT_COUNT (1)
   0x75, 0x08,                    // REPORT_SIZE (8)
   0x26, 0xff, 0x00,              // LOGICAL_MAXIMUM (255)
@@ -167,7 +167,7 @@
   0x05 , 0x01,                   // USAGE_PAGE (Generic Desktop)
   0x09 , 0x80,                   // Usage (System Control)
   0xA1 , 0x01,                   // COLLECTION (Application)
-  0x85 , SLEEP_REPORT_ID,        // REPORT_ID (8)
+  0x85 , 0x06,        // REPORT_ID (8)
   0x15 , 0x00,                   // LOGICAL_MINIMUM (0)
   0x25 , 0x01,                   // LOGICAL_MAXIMUM (1)
   0x75 , 0x01,                   // REPORT_SIZE (1)

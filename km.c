@@ -103,32 +103,32 @@
   0x75, 0x08,                   //  Report Size (8),
   0x95, 0x01,                   //  Report Count (1) (Wheel)
   0x81, 0x06,                   //  Input (Data, Variable, Relative),
-  0x05, 0x0c,                   //  USAGE_PAGE (Consumer Devices)
-  0x0a, 0x38, 0x02,             //  USAGE (AC Pan)
+  0x05, 0x0C,                   //  USAGE_PAGE (Consumer Devices)
+  0x0A, 0x38, 0x02,             //  USAGE (AC Pan)
   0x15, 0x81,                   //  LOGICAL_MINIMUM (-127)
-  0x25, 0x7f,                   //  LOGICAL_MAXIMUM (127)
+  0x25, 0x7F,                   //  LOGICAL_MAXIMUM (127)
   0x75, 0x08,                   //  REPORT_SIZE (8)
   0x81, 0x06,                   //  INPUT (Data,Var,Rel)
   0xC0,                         //  END_COLLECTION (Logical)
   0xC0,                         //  END_COLLECTION
 
   // Upgrade Report - In
-  0x06, 0x00, 0xff,              // USAGE_PAGE (Vendor Defined Page 1)
+  0x06, 0x00, 0xFF,              // USAGE_PAGE (Vendor Defined Page 1)
   0x09, 0x01,                    // USAGE (Vendor Usage 1)
-  0xa1, 0x01,                    // COLLECTION (Application)
-  0x85, 0x2,    //     Report ID(3)
-  0x95, 0x3a, //   REPORT_COUNT
+  0xA1, 0x01,                    // COLLECTION (Application)
+  0x85, 0x02,    //     Report ID(3)
+  0x95, 0x3A, //   REPORT_COUNT
   0x75, 0x08,                    //   REPORT_SIZE (8)
-  0x26, 0xff, 0x00,              //   LOGICAL_MAXIMUM (255)
+  0x26, 0xFF, 0x00,              //   LOGICAL_MAXIMUM (255)
   0x15, 0x00,                    //   LOGICAL_MINIMUM (0)
   0x09, 0x01,                    //   USAGE (Vendor Usage 1)
   0x81, 0x02,                    //   INPUT (Data,Var,Abs)
 
   // Upgrade Report - Out
   0x85, 0x01,   //   Report ID(4)
-  0x95, 0x3a, //   REPORT_COUNT
+  0x95, 0x3A, //   REPORT_COUNT
   0x75, 0x08,                    //   REPORT_SIZE (8)
-  0x26, 0xff, 0x00,              //   LOGICAL_MAXIMUM (255)
+  0x26, 0xFF, 0x00,              //   LOGICAL_MAXIMUM (255)
   0x15, 0x00,                    //   LOGICAL_MINIMUM (0)
   0x09, 0x01,                    //   USAGE (Vendor Usage 1)
   0x91, 0x02,                    //   OUTPUT (Data,Var,Abs)
@@ -136,13 +136,13 @@
 
   // TODO: Remove dead report
   // Key Layer Report
-  0x06, 0x00, 0xff,              // USAGE_PAGE (Vendor Defined Page 1)
+  0x06, 0x00, 0xFF,              // USAGE_PAGE (Vendor Defined Page 1)
   0x09, 0x01,                    // USAGE (Vendor Usage 1)
-  0xa1, 0x01,                    // COLLECTION (Application)
+  0xA1, 0x01,                    // COLLECTION (Application)
   0x85, 0x07,     // Report ID(07)
   0x95, 0x02,                    // REPORT_COUNT (2)
   0x75, 0x08,                    // REPORT_SIZE (8)
-  0x26, 0xff, 0x00,              // LOGICAL_MAXIMUM (255)
+  0x26, 0xFF, 0x00,              // LOGICAL_MAXIMUM (255)
   0x15, 0x00,                    // LOGICAL_MINIMUM (0)
   0x09, 0x01,                    // USAGE (Vendor Usage 1)
   0x81, 0x02,                    // INPUT (Data,Var,Abs)
@@ -150,13 +150,13 @@
 
   // TODO: Remove dead report
   // Software Macro Report
-  0x06, 0x00, 0xff,              // USAGE_PAGE (Vendor Defined Page 1)
+  0x06, 0x00, 0xFF,              // USAGE_PAGE (Vendor Defined Page 1)
   0x09, 0x01,                    // USAGE (Vendor Usage 1)
-  0xa1, 0x01,                    // COLLECTION (Application)
+  0xA1, 0x01,                    // COLLECTION (Application)
   0x85, 0x08,    // Report ID(09)
   0x95, 0x02,                    // REPORT_COUNT (1)
   0x75, 0x08,                    // REPORT_SIZE (8)
-  0x26, 0xff, 0x00,              // LOGICAL_MAXIMUM (255)
+  0x26, 0xFF, 0x00,              // LOGICAL_MAXIMUM (255)
   0x15, 0x00,                    // LOGICAL_MINIMUM (0)
   0x09, 0x01,                    // USAGE (Vendor Usage 1)
   0x81, 0x02,                    // INPUT (Data,Var,Abs)

@@ -1,26 +1,26 @@
 Main_Items={
-  "Input"          : 0x80,
-  "Output"         : 0x90,
-  "Feature"        : 0xB0,
-  "Collection"     : 0xA0,
-  "End_Collection" : 0xC0,
+  "INPUT"          : 0x80,
+  "OUTPUT"         : 0x90,
+  "FEATURE"        : 0xB0,
+  "COLLECTION"     : 0xA0,
+  "END_COLLECTION" : 0xC0,
 }
 Global_Items={
-  "Usage_Page"       : 0x04,
-  "Logical_Minimum"  : 0x14,
-  "Logical_Maximum"  : 0x24,
-  "Physical_Minimum" : 0x34,
-  "Physical_Maximum" : 0x44,
-  "Unit_Exponent"    : 0x54,
-  "Unit"             : 0x64,
-  "Report_Size"      : 0x74,
-  "Report_ID"        : 0x84,
-  "Report_Count"     : 0x94,
+  "USAGE_PAGE"       : 0x04,
+  "LOGICAL_MINIMUM"  : 0x14,
+  "LOGICAL_MAXIMUM"  : 0x24,
+  "PHYSICAL_MINIMUM" : 0x34,
+  "PHYSICAL_MAXIMUM" : 0x44,
+  "UNIT_EXPONENT"    : 0x54,
+  "UNIT"             : 0x64,
+  "REPORT_SIZE"      : 0x74,
+  "REPORT_ID"        : 0x84,
+  "REPORT_COUNT"     : 0x94,
 }
 Local_Items={
-  "Usage"         : 0x08,
-  "Usage_Minimum" : 0x18,
-  "Usage_Maximum" : 0x28,
+  "USAGE"         : 0x08,
+  "USAGE_MINIMUM" : 0x18,
+  "USAGE_MAXIMUM" : 0x28,
 }
 IOF_Constants={
   "IOF_ConstArry"     : 0x1,
@@ -29,7 +29,7 @@ IOF_Constants={
   "IOF_Array"         : 0x0,
   "IOF_VariableBuffer": 0x0102,
 }
-Clc_Constants={
+Collection_Constants={
   "Clc_Physical"     : 0x00,
   "Clc_Application"  : 0x01,
   "Clc_Logical"      : 0x02,
@@ -43,40 +43,40 @@ Unit_Constants={
   "Unit_None" : 0x00,
 }
 Usage_Page_Constants={
-  "Generic_Desktop_ID" : 0x01,
-  "Simulation_ID"      : 0x02,
-  "Button_ID"          : 0x09,
-  "Physical_Interface" : 0x0F,
-  "Ordinal_ID"         : 0x0A,
-  "Consumer_Page_ID"   : 0x0C,
-  "Vendor_Page_0"      : 0xFF00,
+  "Generic Desktop"    : 0x01,
+  "Simulation"         : 0x02,
+  "Button"             : 0x09,
+  "Physical Interface" : 0x0F,
+  "Ordinal"            : 0x0A,
+  "Consumer Page"      : 0x0C,
+  "Vendor Page 0"      : 0xFF00,
 }
 GenericDesktop_Constants={
 #Generic Desktop Page
-  "Pointer_ID"   : 0x01,
-  "Joystick_ID"  : 0x04,
-  "Game_Pad_ID"  : 0x05,
-  "X_ID"         : 0x30,
-  "Y_ID"         : 0x31,
-  "Z_ID"         : 0x32,
-  "Rx_ID"        : 0x33,
-  "Ry_ID"        : 0x34,
-  "Rz_ID"        : 0x35,
-  "Byte_Count"   : 0x3B,
+  "Pointer"    : 0x01,
+  "Joystick"   : 0x04,
+  "Game_Pad"   : 0x05,
+  "X"          : 0x30,
+  "Y"          : 0x31,
+  "Z"          : 0x32,
+  "Rx"         : 0x33,
+  "Ry"         : 0x34,
+  "Rz"         : 0x35,
+  "Byte Count" : 0x3B,
 }
 SimulationControl_Constants={
 #Simulation Control Page
-  "Throttle_ID"  : 0xBB,
+  "Throttle"  : 0xBB,
 }
 Button_Constants={
 #Button Usage Page
-  "No_botton_ID" : 0x00,
-  "Button1_ID"   : 0x01,
-  "Button4_ID"   : 0x04,
+  "No Button" : 0x00,
+  "Button 1"   : 0x01,
+  "Button 4"   : 0x04,
 }
 Ordinal_Constans={
-  "Instance_1" : 0x01,
-  "Instance_2" : 0x02,
+  "Instance 1" : 0x01,
+  "Instance 2" : 0x02,
 }
 #PID usages from \
 #Device Class Definition for Physical Interface Devices (PID) Version 1.0
@@ -189,8 +189,6 @@ PID_Usage_Constants={
   "PID_Create_New_Effect_Report"         : 0xAB,
   "PID_RAM_Pool_Available"               : 0xAC,
 }
-Consumer_Page_Constants={
-}
 HID_Items=[Main_Items,Global_Items,Local_Items]
 HID_Constants=[
   GenericDesktop_Constants,
@@ -198,37 +196,37 @@ HID_Constants=[
   Button_Constants,
   Usage_Page_Constants,
   Unit_Constants,
-  Clc_Constants,
+  Collection_Constants,
   IOF_Constants,
   PID_Usage_Constants,
   Ordinal_Constans,
 ]
 UsageByPage={
-  "Generic_Desktop_ID" : GenericDesktop_Constants,
-  "Simulation_ID"      : SimulationControl_Constants,
-  "Button_ID"          : Button_Constants,
-  "Physical_Interface" : PID_Usage_Constants,
-  "Ordinal_ID"         : Ordinal_Constans,
-  "Consumer_Page_ID"   : Consumer_Page_Constants,
-  "Vendor_Page_0"      : {},
+  "Generic Desktop"    : GenericDesktop_Constants,
+  "Simulation"         : SimulationControl_Constants,
+  "Button"             : Button_Constants,
+  "Physical Interface" : PID_Usage_Constants,
+  "Ordinal"            : Ordinal_Constans,
+  "Consumer Page"      : {},
+  "Vendor Page 0"      : {},
 }
 ConstByItem={
-  "Input"          : IOF_Constants,
-  "Output"         : IOF_Constants,
-  "Feature"        : IOF_Constants,
-  "Collection"     : Clc_Constants,
-  "End_Collection" : {},
-  "Usage_Page"       : Usage_Page_Constants,
-  "Logical_Minimum"  : {},
-  "Logical_Maximum"  : {},
-  "Physical_Minimum" : {},
-  "Physical_Maximum" : {},
-  "Unit_Exponent"    : {},
-  "Unit"             : Unit_Constants,
-  "Report_Size"      : {},
-  "Report_ID"        : {},
-  "Report_Count"     : {},
-  "Usage"         : {},
-  "Usage_Minimum" : {},
-  "Usage_Maximum" : {},
+  "INPUT"            : IOF_Constants,
+  "OUTPUT"           : IOF_Constants,
+  "FEATURE"          : IOF_Constants,
+  "COLLECTION"       : Collection_Constants,
+  "END_COLLECTION"   : {},
+  "USAGE_PAGE"       : Usage_Page_Constants,
+  "LOGICAL_MINIMUM"  : {},
+  "LOGICAL_MAXIMUM"  : {},
+  "PHYSICAL_MINIMUM" : {},
+  "PHYSICAL_MAXIMUM" : {},
+  "UNIT_EXPONENT"    : {},
+  "UNIT"             : Unit_Constants,
+  "REPORT_SIZE"      : {},
+  "REPORT_ID"        : {},
+  "REPORT_COUNT"     : {},
+  "USAGE"            : {},
+  "USAGE_MINIMUM"    : {},
+  "USAGE_MAXIMUM"    : {},
 }

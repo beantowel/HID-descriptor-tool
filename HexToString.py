@@ -31,7 +31,7 @@ def valueByHex(item, len, hexd):
     print(item, hex(hexd))
     print('value constant missing')
   if len == 0:
-    return ''
+    return None
 
   if hexd > (1<<len*8-1)-1: #calculate complement
     hexd = (1<<(len*8)) - hexd
@@ -69,7 +69,10 @@ for line in lines:
     tabcnt-=1
   for i in range(0,tabcnt):
     fileOut.write('  ');
-  fileOut.write(item + ' (' + str(value) + '),\n')
+  fileOut.write(item)
+  if value != None:
+    fileOut.write(' (' + str(value) + ')')
+  fileOut.write('\n')
   if item == 'COLLECTION':
     tabcnt += 1
 fileOut.close()

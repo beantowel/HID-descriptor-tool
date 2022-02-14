@@ -86,59 +86,63 @@ usagePage=None
 #descriptor parser
 for line in lines:
   print(line.rstrip()) #echo
-  line=line.expandtabs(tabsize=4)
-  copyline=line
-  line=line.lstrip()
-  comment=line.find('//')
+  line = line.expandtabs(tabsize=4)
+  copyline = line
+  line = line.lstrip()
+  comment = line.find('//')
   if comment >= 0:
-    line=line[0:comment]
+    line = line[0:comment]
 
-  tfunc=lambda regex:re.search('\\b'+regex+'\\b',line) #match item
-  item=MatchDefine(HID_Items, tfunc)
-  if item==None: #failed matching item
+  tfunc = lambda regex:re.search('\\b'+regex+'\\b',line) #match item
+  item = MatchDefine(HID_Items, tfunc)
+  if item == None: #failed matching item
     continue
   print('item: ', item)
 
-  inBracket=re.search('\(.*\)',line).group(0) #extract inBracket
+  inBracket = re.search('\(.*\)',line)
+  if inBracket != None:
+    inBracket = inBracket.group(0)
   print('inBracket: ', inBracket)
 
-  tfunc=lambda regex:re.search(':'+regex+'\)',inBracket)
-  changePage=MatchDefine([Usage_Page_Constants],tfunc)
+  value = None
+  if inBracket != None:
+    tfunc = lambda regex:re.search(':'+regex+'\)',inBracket)
+    changePage = MatchDefine([Usage_Page_Constants],tfunc)
 
-  defSet=HID_Constants
-  if item[0]=='Usage': #switch to usagePage
-    defSet=[UsageByPage[usagePage]]
-    if changePage!=None:
-      defSet=[UsageByPage[changePage[0]]]
-  else: #switch to corresponded item
-    defSet=[ConstByItem[item[0]]]
+    defSet = HID_Constants
+    if item[0] == 'USAGE': #switch to usagePage
+      defSet = [UsageByPage[usagePage]]
+      if changePage != None:
+        defSet = [UsageByPage[changePage[0]]]
+    else: #switch to corresponded item
+      defSet = [ConstByItem[item[0]]]
 
-  tfunc=lambda regex:re.search('\('+regex+'[\):]',inBracket)
-  value=MatchDefine(defSet, tfunc)
-  print('value: ', value)
+    tfunc = lambda regex:re.search('\('+regex+'[\):]',inBracket)
+    value = MatchDefine(defSet, tfunc)
+    print('value: ', value)
 
-  num_value=None
-  if value!=None:
-    num_value=value[1]
-  elif len(inBracket[1:-1]) > 0:
-    num_value=int(inBracket[1:-1])
+  num_value = None
+  if value != None:
+    num_value = value[1]
+  elif inBracket != None:
+    num_value = int(inBracket[1:-1])
   print('num: ', num_value)
 
-  if value!=None:
-    byteSize=u_Byte_Size(num_value)
-    if changePage!=None:
-      byteSize=2
-    out=ShortItem(item[1],num_value,byteSize,changePage)
+  if value != None:
+    byteSize = u_Byte_Size(num_value)
+    if changePage != None:
+      byteSize = 2
+    out = ShortItem(item[1],num_value,byteSize,changePage)
     #unsigned preDefinedConstant
-  elif len(inBracket[1:-1])>0:
-    size=Byte_Size(num_value) * 8
-    data=ToComplement(num_value, size)
-    out=ShortItem(item[1],data,Byte_Size(num_value),changePage) # signed value
+  elif inBracket != None:
+    size = Byte_Size(num_value) * 8
+    data = ToComplement(num_value, size)
+    out = ShortItem(item[1],data,Byte_Size(num_value),changePage) # signed value
   else:
-    out=ShortItem(item[1],0,0,changePage) #default none value
+    out = ShortItem(item[1],0,0,changePage) #default none value
 
-  if item[0]=='Usage_Page' and value != None:
-    usagePage=value[0]
+  if item[0] == 'USAGE_PAGE' and value != None:
+    usagePage = value[0]
 
   fileOut.write(out[0] + ',') # prefix
   for i in out[1]: # data

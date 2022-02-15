@@ -26,7 +26,7 @@ def u_Byte_Size(x):
 def ToComplement(x,size):
   x=int(x)
   if x<0:
-    x=x+2**size
+    x=x+2**(size * 8)
   return x
 
 def PrefixZero(hdata,byteSize):
@@ -114,32 +114,29 @@ for line in lines:
       defSet = [UsageByPage[usagePage]]
       if changePage != None:
         defSet = [UsageByPage[changePage[0]]]
-    else: #switch to corresponded item
+    else: # switch to corresponded item
       defSet = [ConstByItem[item[0]]]
 
     tfunc = lambda regex:re.search('\('+regex+'[\):]',inBracket)
     value = MatchDefine(defSet, tfunc)
     print('value: ', value)
 
-  num_value = None
   if value != None:
-    num_value = value[1]
-  elif inBracket != None:
-    num_value = int(inBracket[1:-1])
-  print('num: ', num_value)
-
-  if value != None:
-    byteSize = u_Byte_Size(num_value)
+    byteSize = u_Byte_Size(value[1])
     if changePage != None:
       byteSize = 2
-    out = ShortItem(item[1],num_value,byteSize,changePage)
-    #unsigned preDefinedConstant
+    out = ShortItem(item[1],value[1],byteSize,changePage)
   elif inBracket != None:
-    size = Byte_Size(num_value) * 8
-    data = ToComplement(num_value, size)
-    out = ShortItem(item[1],data,Byte_Size(num_value),changePage) # signed value
+    if inBracket.startswith('(0x'):
+      bracket_value = int(inBracket[1:-1], 16)
+      size = u_Byte_Size(bracket_value)
+    else:
+      bracket_value = int(inBracket[1:-1], 10)
+      size = Byte_Size(bracket_value)
+      bracket_value = ToComplement(bracket_value, size)
+    out = ShortItem(item[1],bracket_value,size,changePage) # signed value
   else:
-    out = ShortItem(item[1],0,0,changePage) #default none value
+    out = ShortItem(item[1],0,0,changePage) # default none value
 
   if item[0] == 'USAGE_PAGE' and value != None:
     usagePage = value[0]
@@ -149,6 +146,6 @@ for line in lines:
     fileOut.write(i + ',')
   for i in range(0, 4 - len(out[1])): # max 4 bytes
     fileOut.write('     ')
-  fileOut.write(" // " + copyline) #copy source as comments
+  fileOut.write(" // " + copyline) # copy source as comments
 fileOut.write("// Total:" + str(bytecount) + " Bytes")
 fileOut.close()

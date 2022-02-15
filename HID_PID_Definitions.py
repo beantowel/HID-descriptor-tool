@@ -78,6 +78,7 @@ Ordinal_Constans={
   "Instance 1" : 0x01,
   "Instance 2" : 0x02,
 }
+# WORKING: more pages
 #PID usages from \
 #Device Class Definition for Physical Interface Devices (PID) Version 1.0
 #Table 2: Physical Input Device Page

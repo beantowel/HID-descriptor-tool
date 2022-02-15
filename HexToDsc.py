@@ -44,13 +44,12 @@ def valueByHex(item, len, hexd):
     return to_hex(hexd)
 
   # The rest work with an integer
-  if hexd > (1<<len*8-1)-1: #calculate complement
+  if hexd > (1<<len*8-1)-1: # calculate complement
     hexd = (1<<(len*8)) - hexd
     hexd = -hexd
   return str(hexd)
 
 def to_hex(value):
-  # if value < 0: value = -value
   return "0x%X" % value
 
 fileIn = "km.c"

@@ -7,7 +7,7 @@ def itemByHex(hexd):
   if length == 3: #0b11 represents 4-byte value
     length = 4
 
-  for items in HID_Items:
+  for items in HID_ITEMS:
     for item in items:
       hItem = items[item]
       if (hItem == (hexd & 0xFC)):
@@ -15,16 +15,16 @@ def itemByHex(hexd):
   raise Exception('item error')
 
 def valueByHex(item, len, hexd):
-  constants = ConstByItem[item]
+  constants = CONST_BY_ITEM[item]
   changePage = False
   if item == 'USAGE':
     if len == 4:
       tempUsagePage = valueByHex('USAGE_PAGE', 1, hexd >> 16)
       hexd = hexd & 0x0000FFFF
-      constants = UsageByPage[tempUsagePage]
+      constants = USAGE_BY_PAGE[tempUsagePage]
       changePage = True
     else:
-      constants = UsageByPage[UsagePage]
+      constants = USAGE_BY_PAGE[UsagePage]
   for key in constants:
     if constants[key] == hexd:
       val = key

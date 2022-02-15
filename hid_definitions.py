@@ -1,13 +1,13 @@
 from pages.pid import *
 
-Main_Items={
+MAIN_ITEMS={
   "INPUT"          : 0x80,
   "OUTPUT"         : 0x90,
   "FEATURE"        : 0xB0,
   "COLLECTION"     : 0xA0,
   "END_COLLECTION" : 0xC0,
 }
-Global_Items={
+GLOBAL_ITEMS={
   "USAGE_PAGE"       : 0x04,
   "LOGICAL_MINIMUM"  : 0x14,
   "LOGICAL_MAXIMUM"  : 0x24,
@@ -19,7 +19,7 @@ Global_Items={
   "REPORT_ID"        : 0x84,
   "REPORT_COUNT"     : 0x94,
 }
-Local_Items={
+LOCAL_ITEMS={
   "USAGE"         : 0x08,
   "USAGE_MINIMUM" : 0x18,
   "USAGE_MAXIMUM" : 0x28,
@@ -31,7 +31,7 @@ IOF_Constants={
   "IOF_Array"         : 0x0,
   "IOF_VariableBuffer": 0x0102,
 }
-Collection_Constants={
+COLLECTIONS={
   "Clc_Physical"     : 0x00,
   "Clc_Application"  : 0x01,
   "Clc_Logical"      : 0x02,
@@ -39,12 +39,12 @@ Collection_Constants={
   "Clc_Named_Array"  : 0x04,
   "Clc_Usage_Switch" : 0x05,
 }
-Unit_Constants={
-  "Eng_Lin_Time": 0x1003,
-  "Eng_Rot_Angular_Pos": 0x14,
-  "Unit_None" : 0x00,
+UNIT_CONSTANTS={
+  "Unit_None"           : 0x00,
+  "Eng_Rot_Angular_Pos" : 0x14,
+  "Eng_Lin_Time"        : 0x1003,
 }
-Usage_Page_Constants={
+USAGE_PAGES={
   "Generic Desktop"    : 0x01,
   "Simulation"         : 0x02,
   "Button"             : 0x09,
@@ -77,40 +77,40 @@ Ordinal_Constans={
   "Instance 1" : 0x01,
   "Instance 2" : 0x02,
 }
-HID_Items=[Main_Items,Global_Items,Local_Items]
-HID_Constants=[
-  GenericDesktop_Constants,
-  SimulationControl_Constants,
-  Button_Constants,
-  Usage_Page_Constants,
-  Unit_Constants,
-  Collection_Constants,
-  IOF_Constants,
-  PID_Usage_Constants,
-  Ordinal_Constans,
-]
-UsageByPage={
+HID_ITEMS=[MAIN_ITEMS,GLOBAL_ITEMS,LOCAL_ITEMS]
+# HID_Constants=[
+#   GenericDesktop_Constants,
+#   SimulationControl_Constants,
+#   Button_Constants,
+#   USAGE_PAGES,
+#   UNIT_CONSTANTS,
+#   COLLECTIONS,
+#   IOF_Constants,
+#   PID_PAGE,
+#   Ordinal_Constans,
+# ]
+USAGE_BY_PAGE={
   "Generic Desktop"    : GenericDesktop_Constants,
   "Simulation"         : SimulationControl_Constants,
   "Button"             : Button_Constants,
-  "Physical Interface" : PID_Usage_Constants,
+  "Physical Interface" : PID_PAGE,
   "Ordinal"            : Ordinal_Constans,
   "Consumer Page"      : {},
   "Vendor Page 0"      : {},
 }
-ConstByItem={
+CONST_BY_ITEM={
   "INPUT"            : IOF_Constants,
   "OUTPUT"           : IOF_Constants,
   "FEATURE"          : IOF_Constants,
-  "COLLECTION"       : Collection_Constants,
+  "COLLECTION"       : COLLECTIONS,
   "END_COLLECTION"   : {},
-  "USAGE_PAGE"       : Usage_Page_Constants,
+  "USAGE_PAGE"       : USAGE_PAGES,
   "LOGICAL_MINIMUM"  : {},
   "LOGICAL_MAXIMUM"  : {},
   "PHYSICAL_MINIMUM" : {},
   "PHYSICAL_MAXIMUM" : {},
   "UNIT_EXPONENT"    : {},
-  "UNIT"             : Unit_Constants,
+  "UNIT"             : UNIT_CONSTANTS,
   "REPORT_SIZE"      : {},
   "REPORT_ID"        : {},
   "REPORT_COUNT"     : {},

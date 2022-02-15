@@ -94,7 +94,7 @@ for line in lines:
     line = line[0:comment]
 
   tfunc = lambda regex:re.search('\\b'+regex+'\\b',line) #match item
-  item = MatchDefine(HID_Items, tfunc)
+  item = MatchDefine(HID_ITEMS, tfunc)
   if item == None: #failed matching item
     continue
   print('item: ', item)
@@ -107,15 +107,16 @@ for line in lines:
   value = None
   if inBracket != None:
     tfunc = lambda regex:re.search(':'+regex+'\)',inBracket)
-    changePage = MatchDefine([Usage_Page_Constants],tfunc)
+    changePage = MatchDefine([USAGE_PAGES],tfunc)
 
-    defSet = HID_Constants
+    # defSet = HID_Constants
+    defSet = []
     if item[0] == 'USAGE': #switch to usagePage
-      defSet = [UsageByPage[usagePage]]
+      defSet = [USAGE_BY_PAGE[usagePage]]
       if changePage != None:
-        defSet = [UsageByPage[changePage[0]]]
+        defSet = [USAGE_BY_PAGE[changePage[0]]]
     else: # switch to corresponded item
-      defSet = [ConstByItem[item[0]]]
+      defSet = [CONST_BY_ITEM[item[0]]]
 
     tfunc = lambda regex:re.search('\('+regex+'[\):]',inBracket)
     value = MatchDefine(defSet, tfunc)

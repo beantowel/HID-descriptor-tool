@@ -1,5 +1,5 @@
 import re
-from HID_PID_Definitions import *
+from hid_definitions import *
 
 def Byte_Size(x):
   '''ByteSize for Short Items

@@ -34,14 +34,24 @@ def valueByHex(item, len, hexd):
   if constants != {}:
     print(item, hex(hexd))
     print('value constant missing')
+
   if len == 0:
     return None
 
+  # These ones work best with a hex value
+  if item in { "INPUT", "OUTPUT", "FEATURE", "COLLECTION",
+               "USAGE_PAGE", "USAGE", "USAGE_MINIMUM", "USAGE_MAXIMUM"}:
+    return to_hex(hexd)
+
+  # The rest work with an integer
   if hexd > (1<<len*8-1)-1: #calculate complement
     hexd = (1<<(len*8)) - hexd
     hexd = -hexd
-    return hexd
-  return hexd
+  return str(hexd)
+
+def to_hex(value):
+  # if value < 0: value = -value
+  return "0x%X" % value
 
 fileIn = "km.c"
 fileOut= open("km.rptDsc",'w')
@@ -73,7 +83,7 @@ for line in lines:
     fileOut.write('  ');
   fileOut.write(item)
   if value != None:
-    fileOut.write(' (' + str(value) + ')')
+    fileOut.write(' (' + value + ')')
   fileOut.write('\n')
   if item == 'COLLECTION':
     tabcnt += 1

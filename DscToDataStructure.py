@@ -135,7 +135,7 @@ for line in lines:
         key=line[:pos]
     print('------',key) #echo
 
-    for regex in Global_Items:
+    for regex in GLOBAL_ITEMS:
         item=re.search('\\b'+regex+'\\b',key)
         value=re.search('\(.*\)',key)
         if item!=None:
@@ -147,7 +147,7 @@ for line in lines:
                 Outputs.append('//'+item+':'+value[1:-1])
             break
 
-    for regex in Local_Items:
+    for regex in LOCAL_ITEMS:
         item=re.search('\\b'+regex+'\\b',key)
         value=re.search('\(.*?[\):]',key)
         if item!=None:
@@ -159,7 +159,7 @@ for line in lines:
                 lcalStat[item]=[value[1:-1]]
             break
 
-    for regex in Main_Items:
+    for regex in MAIN_ITEMS:
         item=re.search('\\b'+regex+'\\b',key)
         value=re.search('\(.*\)',key)
         if item!=None:

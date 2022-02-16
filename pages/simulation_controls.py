@@ -1,3 +1,3 @@
 SIMULATION_CONTROLS = {
-  "Throttle"  : 0xBB,
+  'Throttle'  : 0xBB,
 }

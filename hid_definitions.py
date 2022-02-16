@@ -90,6 +90,7 @@ USAGE_BY_PAGE={
   'PID'             : pages.PID,
   'Ordinal'         : pages.ORDINAL,
   'LED'             : pages.LED,
+  'Consumer'        : pages.CONSUMER,
 }
 CONST_BY_ITEM={
   'INPUT'            : IOF_Flags,

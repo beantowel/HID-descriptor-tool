@@ -63,10 +63,10 @@ fileOut= open("km.rptDsc",'w')
 lines  = open(fileIn).readlines()
 tabcnt = 0
 for line in lines:
-  print('------',line.rstrip()) #echo
+  print('------',line.rstrip()) # echo
   line = line.expandtabs(tabsize=4)
   key = line
-  pos = line.find('//') #remove comments
+  pos = line.find('//') # remove comments
   if pos >= 0:
     key = line[:pos]
   hexes = re.findall('0x[0-9A-Fa-f]*',key)

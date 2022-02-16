@@ -83,9 +83,8 @@ fileOut=open("km.out",'w')
 lines=open(fileIn).readlines()
 bytecount=0
 usagePage=None
-#descriptor parser
 for line in lines:
-  print(line.rstrip()) #echo
+  print('------',line.rstrip()) # echo
   line = line.expandtabs(tabsize=4)
   copyline = line
   line = line.lstrip()
@@ -93,9 +92,9 @@ for line in lines:
   if comment >= 0:
     line = line[0:comment]
 
-  tfunc = lambda key:re.search('\\b'+key+'\\b',line) #match item
+  tfunc = lambda key:re.search('\\b'+key+'\\b',line) # match item
   item = MatchDefine(HID_ITEMS, tfunc)
-  if item == None: #failed matching item
+  if item == None: # failed matching item
     continue
   print('item: ', item)
 

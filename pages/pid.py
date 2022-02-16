@@ -1,4 +1,4 @@
-PID_PAGE={
+PID = {
   "PID_Undefined"                        : 0x00,
   "PID_Physical_Interface_Device"        : 0x01,
   "PID_Normal"                           : 0x20,

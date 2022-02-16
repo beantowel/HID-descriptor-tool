@@ -1,4 +1,4 @@
-from pages.pid import *
+import pages
 
 MAIN_ITEMS={
   "INPUT"          : 0x80,
@@ -32,12 +32,12 @@ IOF_Constants={
   "IOF_VariableBuffer": 0x0102,
 }
 COLLECTIONS={
-  "Clc_Physical"     : 0x00,
-  "Clc_Application"  : 0x01,
-  "Clc_Logical"      : 0x02,
-  "Clc_Report"       : 0x03,
-  "Clc_Named_Array"  : 0x04,
-  "Clc_Usage_Switch" : 0x05,
+  "Physical"     : 0x00,
+  "Application"  : 0x01,
+  "Logical"      : 0x02,
+  "Report"       : 0x03,
+  "Named Array"  : 0x04,
+  "Usage Switch" : 0x05,
 }
 UNIT_CONSTANTS={
   "Unit_None"           : 0x00,
@@ -45,37 +45,30 @@ UNIT_CONSTANTS={
   "Eng_Lin_Time"        : 0x1003,
 }
 USAGE_PAGES={
-  "Generic Desktop"    : 0x01,
-  "Simulation"         : 0x02,
-  "Button"             : 0x09,
-  "Physical Interface" : 0x0F,
-  "Ordinal"            : 0x0A,
-  "Consumer Page"      : 0x0C,
-  "Vendor Page 0"      : 0xFF00,
-}
-GenericDesktop_Constants={
-  "Pointer"    : 0x01,
-  "Joystick"   : 0x04,
-  "Game_Pad"   : 0x05,
-  "X"          : 0x30,
-  "Y"          : 0x31,
-  "Z"          : 0x32,
-  "Rx"         : 0x33,
-  "Ry"         : 0x34,
-  "Rz"         : 0x35,
-  "Byte Count" : 0x3B,
-}
-SimulationControl_Constants={
-  "Throttle"  : 0xBB,
-}
-Button_Constants={
-  "No Button" : 0x00,
-  "Button 1"   : 0x01,
-  "Button 4"   : 0x04,
-}
-Ordinal_Constans={
-  "Instance 1" : 0x01,
-  "Instance 2" : 0x02,
+  'Generic Desktop': 0x01,
+  'Simulation Controls': 0x02,
+  'VR Controls': 0x03,
+  'Sport Controls': 0x04,
+  'Game Controls': 0x05,
+  'Generic Device Controls': 0x06,
+  'Keyboard/Keypad': 0x07,
+  'LED': 0x08,
+  'Button': 0x09,
+  'Ordinal': 0x0A,
+  'Telephony Device': 0x0B,
+  'Consumer': 0x0C,
+  'Digitizers': 0x0D,
+  'Haptics': 0x0E,
+  'PID': 0x0F,
+  'Unicode': 0x10,
+  'Eye and Head Trackers': 0x12,
+  'Auxiliary Display': 0x14,
+  'Sensors': 0x20,
+  'Medical Instrument': 0x40,
+  'Braille Display': 0x41,
+  'Lighting And Illumination': 0x59,
+  'Bar Code Scanner page': 0x8C,
+  'Vendor Page 0': 0xFF00,
 }
 HID_ITEMS=[MAIN_ITEMS,GLOBAL_ITEMS,LOCAL_ITEMS]
 # HID_Constants=[
@@ -90,13 +83,12 @@ HID_ITEMS=[MAIN_ITEMS,GLOBAL_ITEMS,LOCAL_ITEMS]
 #   Ordinal_Constans,
 # ]
 USAGE_BY_PAGE={
-  "Generic Desktop"    : GenericDesktop_Constants,
-  "Simulation"         : SimulationControl_Constants,
-  "Button"             : Button_Constants,
-  "Physical Interface" : PID_PAGE,
-  "Ordinal"            : Ordinal_Constans,
-  "Consumer Page"      : {},
-  "Vendor Page 0"      : {},
+  "Generic Desktop"    : pages.GENERIC_DESKTOP,
+  "Keyboard/Keypad"    : pages.KEYBOARD,
+  "Simulation"         : pages.SIMULATION_CONTROLS,
+  "Button"             : pages.BUTTON,
+  "PID"                : pages.PID,
+  "Ordinal"            : pages.ORDINAL,
 }
 CONST_BY_ITEM={
   "INPUT"            : IOF_Constants,

@@ -1,5 +1,5 @@
 import re
-from HID_PID_Definitions import *
+from hid_definitions import *
 UsagePage=None
 
 def itemByHex(hexd):
@@ -15,28 +15,34 @@ def itemByHex(hexd):
   raise Exception('item error')
 
 def valueByHex(item, len, hexd):
+  if len == 0:
+    return None
+
   constants = CONST_BY_ITEM[item]
-  changePage = False
-  if item == 'USAGE':
+  page = None
+  inline_page = False
+  if item in { "USAGE", "USAGE_MINIMUM", "USAGE_MAXIMUM"}:
+    page = UsagePage
     if len == 4:
-      tempUsagePage = valueByHex('USAGE_PAGE', 1, hexd >> 16)
+      page = valueByHex('USAGE_PAGE', 1, hexd >> 16)
       hexd = hexd & 0x0000FFFF
-      constants = USAGE_BY_PAGE[tempUsagePage]
-      changePage = True
+      inline_page = True
+    if page in USAGE_BY_PAGE:
+      constants = USAGE_BY_PAGE[page]
     else:
-      constants = USAGE_BY_PAGE[UsagePage]
+      print('Page missing: ', page)
   for key in constants:
     if constants[key] == hexd:
       val = key
-      if changePage:
-        val += ':'+tempUsagePage
+      if inline_page:
+        val = page + ': ' + val
       return val
-  if constants != {}:
-    print(item, hex(hexd))
-    print('value constant missing')
 
-  if len == 0:
-    return None
+  if constants != {}:
+    if page != None:
+      print('Value missing: ', page, hex(hexd))
+    else:
+      print('Value missing: ', item, hex(hexd))
 
   # These ones work best with a hex value
   if item in { "INPUT", "OUTPUT", "FEATURE", "COLLECTION",

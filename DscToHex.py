@@ -142,11 +142,11 @@ for line in lines:
   if item[0] == 'USAGE_PAGE' and value != None:
     usagePage = value[0]
 
-  fileOut.write(out[0] + ',') # prefix
+  fileOut.write(out[0] + ', ') # prefix
   for i in out[1]: # data
-    fileOut.write(i + ',')
+    fileOut.write(i + ', ')
   for i in range(0, 4 - len(out[1])): # max 4 bytes
-    fileOut.write('     ')
+    fileOut.write('      ')
   fileOut.write(" // " + copyline) # copy source as comments
 fileOut.write("// Total:" + str(bytecount) + " Bytes")
 fileOut.close()

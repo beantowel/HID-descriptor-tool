@@ -83,12 +83,13 @@ HID_ITEMS=[MAIN_ITEMS,GLOBAL_ITEMS,LOCAL_ITEMS]
 #   Ordinal_Constans,
 # ]
 USAGE_BY_PAGE={
-  'Generic Desktop'    : pages.GENERIC_DESKTOP,
-  'Keyboard/Keypad'    : pages.KEYBOARD,
-  'Simulation'         : pages.SIMULATION_CONTROLS,
-  'Button'             : pages.BUTTON,
-  'PID'                : pages.PID,
-  'Ordinal'            : pages.ORDINAL,
+  'Generic Desktop' : pages.GENERIC_DESKTOP,
+  'Keyboard/Keypad' : pages.KEYBOARD,
+  'Simulation'      : pages.SIMULATION_CONTROLS,
+  'Button'          : pages.BUTTON,
+  'PID'             : pages.PID,
+  'Ordinal'         : pages.ORDINAL,
+  'LED'             : pages.LED,
 }
 CONST_BY_ITEM={
   'INPUT'            : IOF_Flags,

@@ -24,13 +24,7 @@ LOCAL_ITEMS={
   'USAGE_MINIMUM' : 0x18,
   'USAGE_MAXIMUM' : 0x28,
 }
-IOF_Flags={
-  'Data,Ary,Abs'     : 0b000000000,
-  'Cnst,Ary,Abs'     : 0b000000001,
-  'Cnst,Var,Abs'     : 0b000000011,
-  'Data,Var,Abs'     : 0b000000010,
-  'Data,Ary,Abs,Buf' : 0b100000010,
-}
+HID_ITEMS=[MAIN_ITEMS,GLOBAL_ITEMS,LOCAL_ITEMS]
 COLLECTIONS={
   'Physical'     : 0x00,
   'Application'  : 0x01,
@@ -38,6 +32,14 @@ COLLECTIONS={
   'Report'       : 0x03,
   'Named Array'  : 0x04,
   'Usage Switch' : 0x05,
+}
+IOF_Flags={
+  'Data,Ary,Abs'     : 0b000000000,
+  'Cnst,Ary,Abs'     : 0b000000001,
+  'Data,Var,Abs'     : 0b000000010,
+  'Cnst,Var,Abs'     : 0b000000011,
+  'Data,Var,Rel'     : 0b000000110,
+  'Data,Ary,Abs,Buf' : 0b100000010,
 }
 UNIT_CONSTANTS={
   'Unit_None'           : 0x00,
@@ -70,18 +72,6 @@ USAGE_PAGES={
   'Bar Code Scanner page': 0x8C,
   'Vendor Page 0': 0xFF00,
 }
-HID_ITEMS=[MAIN_ITEMS,GLOBAL_ITEMS,LOCAL_ITEMS]
-# HID_Constants=[
-#   GenericDesktop_Constants,
-#   SimulationControl_Constants,
-#   Button_Constants,
-#   USAGE_PAGES,
-#   UNIT_CONSTANTS,
-#   COLLECTIONS,
-#   IOF_Flags,
-#   PID_PAGE,
-#   Ordinal_Constans,
-# ]
 USAGE_BY_PAGE={
   'Generic Desktop' : pages.GENERIC_DESKTOP,
   'Keyboard/Keypad' : pages.KEYBOARD,
@@ -91,6 +81,7 @@ USAGE_BY_PAGE={
   'Ordinal'         : pages.ORDINAL,
   'LED'             : pages.LED,
   'Consumer'        : pages.CONSUMER,
+  'Vendor Page 0'   : pages.VENDOR_0,
 }
 CONST_BY_ITEM={
   'INPUT'            : IOF_Flags,

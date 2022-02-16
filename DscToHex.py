@@ -96,12 +96,12 @@ for line in lines:
   item = MatchDefine(HID_ITEMS, tfunc)
   if item == None: # failed matching item
     continue
-  print('item: ', item)
+  # print('item: ', item)
 
   inBracket = re.search('\(.*\)',line)
   if inBracket != None:
     inBracket = inBracket.group(0)
-  print('inBracket: ', inBracket)
+  # print('inBracket: ', inBracket)
 
   value = None
   if inBracket != None:
@@ -120,7 +120,7 @@ for line in lines:
 
     tfunc = lambda key:re.search('\('+re.escape(key)+'[\):]',inBracket)
     value = MatchDefine(defSet, tfunc)
-    print('value: ', value)
+    # print('value: ', value)
 
   if value != None:
     byteSize = u_Byte_Size(value[1])

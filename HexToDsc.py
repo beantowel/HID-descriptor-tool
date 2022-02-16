@@ -1,6 +1,13 @@
+import sys
+import fileinput
 import re
+
 from hid_definitions import *
-UsagePage=None
+
+UsagePage = None
+
+def eprint(*args, **kwargs):
+  print(*args, file=sys.stderr, **kwargs)
 
 def itemByHex(hexd):
   length = hexd & 0b11
@@ -30,7 +37,7 @@ def valueByHex(item, len, hexd):
     if page in USAGE_BY_PAGE:
       constants = USAGE_BY_PAGE[page]
     else:
-      print('Page missing: ', page)
+      eprint('Page missing: ', page)
   for key in constants:
     if constants[key] == hexd:
       val = key
@@ -40,9 +47,9 @@ def valueByHex(item, len, hexd):
 
   if constants != {}:
     if page != None:
-      print('Value missing: ', page, hex(hexd))
+      eprint('Value missing: ', page, hex(hexd))
     else:
-      print('Value missing: ', item, hex(hexd))
+      eprint('Value missing: ', item, hex(hexd))
 
   # These ones work best with a hex value
   if item in { "INPUT", "OUTPUT", "FEATURE", "COLLECTION",
@@ -58,12 +65,10 @@ def valueByHex(item, len, hexd):
 def to_hex(value):
   return "0x%X" % value
 
-fileIn = "km.c"
-fileOut= open("km.rptDsc",'w')
-lines  = open(fileIn).readlines()
+fileOut = sys.stdout
 tabcnt = 0
-for line in lines:
-  print('------',line.rstrip()) # echo
+for line in fileinput.input():
+  eprint('------',line.rstrip()) # echo
   line = line.expandtabs(tabsize=4)
   key = line
   pos = line.find('//') # remove comments

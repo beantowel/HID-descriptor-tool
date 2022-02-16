@@ -93,7 +93,7 @@ for line in lines:
   if comment >= 0:
     line = line[0:comment]
 
-  tfunc = lambda regex:re.search('\\b'+regex+'\\b',line) #match item
+  tfunc = lambda key:re.search('\\b'+key+'\\b',line) #match item
   item = MatchDefine(HID_ITEMS, tfunc)
   if item == None: #failed matching item
     continue
@@ -106,19 +106,20 @@ for line in lines:
 
   value = None
   if inBracket != None:
-    tfunc = lambda regex:re.search(':'+regex+'\)',inBracket)
+    tfunc = lambda key:re.search(':'+re.escape(key)+'\)',inBracket)
     changePage = MatchDefine([USAGE_PAGES],tfunc)
 
     # defSet = HID_Constants
     defSet = []
-    if item[0] == 'USAGE': #switch to usagePage
-      defSet = [USAGE_BY_PAGE[usagePage]]
-      if changePage != None:
+    if item[0] in {"USAGE", "USAGE_MINIMUM", "USAGE_MAXIMUM"}:
+      if changePage != None and changePage[0] in USAGE_BY_PAGE:
         defSet = [USAGE_BY_PAGE[changePage[0]]]
+      elif usagePage in USAGE_BY_PAGE:
+        defSet = [USAGE_BY_PAGE[usagePage]]
     else: # switch to corresponded item
       defSet = [CONST_BY_ITEM[item[0]]]
 
-    tfunc = lambda regex:re.search('\('+regex+'[\):]',inBracket)
+    tfunc = lambda key:re.search('\('+re.escape(key)+'[\):]',inBracket)
     value = MatchDefine(defSet, tfunc)
     print('value: ', value)
 

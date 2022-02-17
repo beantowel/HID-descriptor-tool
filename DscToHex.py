@@ -84,6 +84,10 @@ def MatchDefine(defSets,findFunc):
       return defDict
   return None
 
+def swap16(x):
+    return int.from_bytes(x.to_bytes(2, byteorder='little'),
+      byteorder='big', signed=False)
+
 fileOut = sys.stdout
 bytecount = 0
 usagePage=None
@@ -152,5 +156,7 @@ for line in fileinput.input():
   for i in range(0, 4 - len(out[1])): # max 4 bytes
     fileOut.write('      ')
   fileOut.write(" // " + copyline) # copy source as comments
-fileOut.write("// Total:" + str(bytecount) + " Bytes\n")
+fileOut.write("// Total:" + str(bytecount) + " Bytes, " +
+              "0x%04X" % bytecount + " (swapped: " +
+              "0x%04X" % swap16(bytecount) + ")\n")
 fileOut.close()

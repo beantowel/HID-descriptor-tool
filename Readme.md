@@ -15,7 +15,7 @@ an extendable hid descriptor tool, implements a free conversion between hexdemic
 	parses the .rptDsc(report descriptor) into hexdemical codes.
 - DscToDataStructuren.py:
 	parses the .rptDsc into c language data structure definitions.
-- HexToString.py:
+- HexToDsc.py:
 	parses the hexdemical codes to the report descriptor written in natural language.
 
 ## How to Use
